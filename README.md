@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ContaEC - Sistema de Contabilidad para Empresas Ecuatorianas
 
 ## Descripción
@@ -230,3 +231,7 @@ Para soporte técnico:
 ---
 
 **ContaEC** - Simplificando la contabilidad empresarial en Ecuador 🇪🇨
+=======
+# contaec
+Sistema Contable EC
+>>>>>>> dfb413e8f23b09a206ff8684894fd6e8c303c289
