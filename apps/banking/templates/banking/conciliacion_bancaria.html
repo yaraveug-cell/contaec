@@ -1,0 +1,500 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Conciliación Bancaria{% endblock %}
+
+{% block extra_css %}
+<style>
+    .reconciliation-container {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+    
+    .balance-card {
+        background: white;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .balance-amount {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+    
+    .balance-positive {
+        color: #28a745;
+    }
+    
+    .balance-negative {
+        color: #dc3545;
+    }
+    
+    .balance-zero {
+        color: #6c757d;
+    }
+    
+    .transaction-table {
+        max-height: 400px;
+        overflow-y: auto;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+    }
+    
+    .table-sm td {
+        padding: 0.3rem;
+        font-size: 0.875rem;
+    }
+    
+    .reconciled-row {
+        background-color: #d4edda !important;
+        opacity: 0.7;
+    }
+    
+    .btn-reconcile {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    
+    .btn-reconcile:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+    
+    .btn-unreconcile {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #212529;
+    }
+    
+    .btn-unreconcile:hover {
+        background-color: #e0a800;
+        border-color: #d39e00;
+        color: #212529;
+    }
+    
+    .filter-section {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    
+    .transactions-section {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    
+    .section-header {
+        background-color: #f8f9fa;
+        padding: 15px 20px;
+        border-bottom: 1px solid #dee2e6;
+        margin: 0;
+        font-weight: 600;
+    }
+    
+    .check-all-container {
+        padding: 10px 20px;
+        background-color: #f1f3f4;
+        border-bottom: 1px solid #dee2e6;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h3 mb-0">
+                    <i class="fas fa-balance-scale text-primary me-2"></i>
+                    Conciliación Bancaria
+                </h1>
+                <div>
+                    <a href="{% url 'admin:banking_extractobancario_add' %}" class="btn btn-outline-primary btn-sm" target="_blank">
+                        <i class="fas fa-upload me-1"></i>
+                        Subir Extracto
+                    </a>
+                    <a href="{% url 'admin:banking_extractobancario_changelist' %}" class="btn btn-outline-secondary btn-sm" target="_blank">
+                        <i class="fas fa-history me-1"></i>
+                        Historial
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de Filtros -->
+    <div class="filter-section">
+        <form method="get" id="filter-form">
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="{{ filter_form.bank_account.id_for_label }}" class="form-label">
+                        {{ filter_form.bank_account.label }}
+                    </label>
+                    {{ filter_form.bank_account }}
+                </div>
+                <div class="col-md-3">
+                    <label for="{{ filter_form.extracto.id_for_label }}" class="form-label">
+                        {{ filter_form.extracto.label }}
+                    </label>
+                    {{ filter_form.extracto }}
+                </div>
+                <div class="col-md-2">
+                    <label for="{{ filter_form.fecha_desde.id_for_label }}" class="form-label">
+                        {{ filter_form.fecha_desde.label }}
+                    </label>
+                    {{ filter_form.fecha_desde }}
+                </div>
+                <div class="col-md-2">
+                    <label for="{{ filter_form.fecha_hasta.id_for_label }}" class="form-label">
+                        {{ filter_form.fecha_hasta.label }}
+                    </label>
+                    {{ filter_form.fecha_hasta }}
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary me-2">
+                        <i class="fas fa-search me-1"></i>
+                        Filtrar
+                    </button>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="show_all" 
+                               {% if request.GET.show_all %}checked{% endif %} id="show_all">
+                        <label class="form-check-label" for="show_all">
+                            Ver todos
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% if bank_account %}
+    <!-- Resumen de Saldos -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="balance-card">
+                <h6 class="card-subtitle mb-2 text-muted">Saldo Sistema</h6>
+                <div class="balance-amount {% if saldo_final_sistema > 0 %}balance-positive{% elif saldo_final_sistema < 0 %}balance-negative{% else %}balance-zero{% endif %}">
+                    ${{ saldo_final_sistema|floatformat:2 }}
+                </div>
+            </div>
+        </div>
+        {% if extracto %}
+        <div class="col-md-3">
+            <div class="balance-card">
+                <h6 class="card-subtitle mb-2 text-muted">Saldo Extracto</h6>
+                <div class="balance-amount {% if saldo_final_extracto > 0 %}balance-positive{% elif saldo_final_extracto < 0 %}balance-negative{% else %}balance-zero{% endif %}">
+                    ${{ saldo_final_extracto|floatformat:2 }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="balance-card">
+                <h6 class="card-subtitle mb-2 text-muted">Diferencia</h6>
+                <div class="balance-amount {% if diferencia > 0 %}balance-positive{% elif diferencia < 0 %}balance-negative{% else %}balance-zero{% endif %}">
+                    ${{ diferencia|floatformat:2 }}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="col-md-3">
+            <div class="balance-card">
+                <h6 class="card-subtitle mb-2 text-muted">Cuenta Seleccionada</h6>
+                <div class="text-dark">{{ bank_account.get_account_display }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulario de Conciliación -->
+    <form method="post" id="reconciliation-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" id="form-action" value="reconcile">
+        
+        <div class="row">
+            <!-- Movimientos del Sistema -->
+            <div class="col-md-6">
+                <div class="transactions-section">
+                    <h5 class="section-header">
+                        <i class="fas fa-laptop me-2"></i>
+                        Movimientos del Sistema
+                        <span class="badge bg-primary ms-2">{{ transactions|length }}</span>
+                    </h5>
+                    
+                    {% if transactions %}
+                    <div class="check-all-container">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="check-all-transactions">
+                            <label class="form-check-label" for="check-all-transactions">
+                                Seleccionar todos
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="transaction-table">
+                        <table class="table table-sm table-hover mb-0">
+                            <thead class="table-light sticky-top">
+                                <tr>
+                                    <th width="40"></th>
+                                    <th>Fecha</th>
+                                    <th>Descripción</th>
+                                    <th>Referencia</th>
+                                    <th class="text-end">Monto</th>
+                                    <th class="text-center">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transaction in transactions %}
+                                <tr class="{% if transaction.is_reconciled %}reconciled-row{% endif %}">
+                                    <td>
+                                        <div class="form-check">
+                                            <input class="form-check-input transaction-checkbox" 
+                                                   type="checkbox" 
+                                                   name="reconcile_transactions" 
+                                                   value="{{ transaction.id }}"
+                                                   id="trans_{{ transaction.id }}">
+                                        </div>
+                                    </td>
+                                    <td>{{ transaction.transaction_date }}</td>
+                                    <td>{{ transaction.description|truncatechars:40 }}</td>
+                                    <td>{{ transaction.reference|default:"-" }}</td>
+                                    <td class="text-end {% if transaction.signed_amount > 0 %}text-success{% else %}text-danger{% endif %}">
+                                        ${{ transaction.signed_amount|floatformat:2 }}
+                                    </td>
+                                    <td class="text-center">
+                                        {% if transaction.is_reconciled %}
+                                            <span class="badge bg-success">Conciliado</span>
+                                        {% else %}
+                                            <span class="badge bg-warning">Pendiente</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="p-4 text-center text-muted">
+                        <i class="fas fa-inbox fa-2x mb-2"></i>
+                        <p>No hay movimientos para mostrar</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Movimientos del Extracto -->
+            <div class="col-md-6">
+                <div class="transactions-section">
+                    <h5 class="section-header">
+                        <i class="fas fa-file-alt me-2"></i>
+                        Extracto Bancario
+                        {% if extracto_items %}
+                        <span class="badge bg-info ms-2">{{ extracto_items|length }}</span>
+                        {% endif %}
+                    </h5>
+                    
+                    {% if extracto_items %}
+                    <div class="check-all-container">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="check-all-extracto">
+                            <label class="form-check-label" for="check-all-extracto">
+                                Seleccionar todos
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="transaction-table">
+                        <table class="table table-sm table-hover mb-0">
+                            <thead class="table-light sticky-top">
+                                <tr>
+                                    <th width="40"></th>
+                                    <th>Fecha</th>
+                                    <th>Descripción</th>
+                                    <th>Referencia</th>
+                                    <th class="text-end">Monto</th>
+                                    <th class="text-center">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in extracto_items %}
+                                <tr class="{% if item.is_reconciled %}reconciled-row{% endif %}">
+                                    <td>
+                                        <div class="form-check">
+                                            <input class="form-check-input extracto-checkbox" 
+                                                   type="checkbox" 
+                                                   name="reconcile_extracto_items" 
+                                                   value="{{ item.id }}"
+                                                   id="extr_{{ item.id }}">
+                                        </div>
+                                    </td>
+                                    <td>{{ item.fecha }}</td>
+                                    <td>{{ item.descripcion|truncatechars:40 }}</td>
+                                    <td>{{ item.referencia|default:"-" }}</td>
+                                    <td class="text-end {% if item.monto > 0 %}text-success{% else %}text-danger{% endif %}">
+                                        {% if item.credito %}
+                                            +${{ item.credito|floatformat:2 }}
+                                        {% else %}
+                                            -${{ item.debito|floatformat:2 }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        {% if item.is_reconciled %}
+                                            <span class="badge bg-success">Conciliado</span>
+                                        {% else %}
+                                            <span class="badge bg-warning">Pendiente</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% elif extracto %}
+                    <div class="p-4 text-center text-muted">
+                        <i class="fas fa-inbox fa-2x mb-2"></i>
+                        <p>No hay items del extracto para mostrar</p>
+                    </div>
+                    {% else %}
+                    <div class="p-4 text-center text-muted">
+                        <i class="fas fa-upload fa-2x mb-2"></i>
+                        <p>Selecciona un extracto bancario para ver los movimientos</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        {% if transactions or extracto_items %}
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-center gap-2">
+                    <button type="submit" class="btn btn-reconcile btn-lg" onclick="setAction('reconcile')">
+                        <i class="fas fa-check me-2"></i>
+                        Conciliar Seleccionados
+                    </button>
+                    <button type="submit" class="btn btn-unreconcile btn-lg" onclick="setAction('unreconicle')">
+                        <i class="fas fa-undo me-2"></i>
+                        Desconciliar Seleccionados
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </form>
+    {% else %}
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center py-5">
+                <i class="fas fa-university fa-4x text-muted mb-3"></i>
+                <h4 class="text-muted">Selecciona una cuenta bancaria para comenzar</h4>
+                <p class="text-muted">Usa los filtros superiores para seleccionar la cuenta y el período a conciliar.</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Manejo de selección de cuenta bancaria
+    const bankAccountSelect = document.getElementById('id_bank_account');
+    const extractoSelect = document.getElementById('id_extracto');
+    
+    if (bankAccountSelect) {
+        bankAccountSelect.addEventListener('change', function() {
+            const bankAccountId = this.value;
+            
+            if (bankAccountId) {
+                // Cargar extractos via AJAX
+                fetch(`ajax/?action=get_extractos&bank_account_id=${bankAccountId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Limpiar opciones existentes
+                        extractoSelect.innerHTML = '<option value="">Selecciona un extracto bancario</option>';
+                        
+                        // Agregar nuevas opciones
+                        data.extractos.forEach(extracto => {
+                            const option = document.createElement('option');
+                            option.value = extracto.id;
+                            option.textContent = extracto.text;
+                            extractoSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error cargando extractos:', error);
+                    });
+            }
+        });
+    }
+
+    // Checkbox "Seleccionar todos" para transacciones
+    const checkAllTransactions = document.getElementById('check-all-transactions');
+    const transactionCheckboxes = document.querySelectorAll('.transaction-checkbox');
+    
+    if (checkAllTransactions) {
+        checkAllTransactions.addEventListener('change', function() {
+            transactionCheckboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+    }
+
+    // Checkbox "Seleccionar todos" para extracto
+    const checkAllExtracto = document.getElementById('check-all-extracto');
+    const extractoCheckboxes = document.querySelectorAll('.extracto-checkbox');
+    
+    if (checkAllExtracto) {
+        checkAllExtracto.addEventListener('change', function() {
+            extractoCheckboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+    }
+
+    // Auto-submit del filtro cuando cambie show_all
+    const showAllCheckbox = document.getElementById('show_all');
+    if (showAllCheckbox) {
+        showAllCheckbox.addEventListener('change', function() {
+            document.getElementById('filter-form').submit();
+        });
+    }
+
+    // Validación del formulario
+    const reconciliationForm = document.getElementById('reconciliation-form');
+    if (reconciliationForm) {
+        reconciliationForm.addEventListener('submit', function(e) {
+            const checkedTransactions = document.querySelectorAll('input[name="reconcile_transactions"]:checked');
+            const checkedExtracto = document.querySelectorAll('input[name="reconcile_extracto_items"]:checked');
+            
+            if (checkedTransactions.length === 0 && checkedExtracto.length === 0) {
+                e.preventDefault();
+                alert('Por favor selecciona al menos un elemento para conciliar.');
+                return false;
+            }
+            
+            const action = document.getElementById('form-action').value;
+            const actionText = action === 'reconcile' ? 'conciliar' : 'desconciliar';
+            const totalSelected = checkedTransactions.length + checkedExtracto.length;
+            
+            if (!confirm(`¿Estás seguro de ${actionText} ${totalSelected} elemento(s)?`)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    }
+});
+
+function setAction(action) {
+    document.getElementById('form-action').value = action;
+}
+</script>
+{% endblock %}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Campo Descripción</title>
+    <link rel="stylesheet" href="/static/admin/css/journal_entry_lines.css">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .form-row { margin: 10px 0; }
+        .inline-group .form-row { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Campo Descripción Optimizado</h1>
+    
+    <div class="test-section">
+        <h2>❌ ANTES (Textarea):</h2>
+        <div class="form-row">
+            <label>Descripción (textarea):</label><br>
+            <textarea rows="3" cols="50" placeholder="Textarea de múltiples líneas..."></textarea>
+        </div>
+    </div>
+    
+    <div class="test-section inline-group">
+        <h2>✅ DESPUÉS (Input optimizado):</h2>
+        <div class="form-row">
+            <label>Descripción (input):</label><br>
+            <input type="text" 
+                   name="lines-0-description" 
+                   class="vTextField description-single-line"
+                   placeholder="Descripción de la línea del asiento..."
+                   style="width: 300px; height: 28px;">
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🔍 Inspeccionar con DevTools:</h2>
+        <p>1. Click derecho → Inspeccionar</p>
+        <p>2. Verificar que el segundo campo sea &lt;input&gt;</p>
+        <p>3. Ver CSS aplicado</p>
+    </div>
+    
+    <script src="/static/admin/js/journal_entry_lines.js"></script>
+</body>
+</html>

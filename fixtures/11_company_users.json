@@ -1,0 +1,28 @@
+[
+  {
+    "model": "companies.companyuser",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "company": 1,
+      "role": "accountant",
+      "permissions": {},
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "companies.companyuser",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "company": 1,
+      "role": "admin",
+      "permissions": {},
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  }
+]

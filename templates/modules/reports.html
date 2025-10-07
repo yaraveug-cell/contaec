@@ -1,0 +1,92 @@
+{% extends 'modules/base_module.html' %}
+
+{% block breadcrumb %}Reportes{% endblock %}
+
+{% block content %}
+<div class="module-header">
+    <div class="module-icon">📈</div>
+    <h1>Módulo de Reportes</h1>
+    <p>Estados financieros, reportes contables y análisis empresarial</p>
+</div>
+
+<div class="stats">
+    <div class="stat-card">
+        <h3>Empresas Disponibles</h3>
+        <div class="stat-value">{{ user_companies.count }}</div>
+        <p>empresas para reportes</p>
+    </div>
+    
+    <div class="stat-card">
+        <h3>Tipos de Reportes</h3>
+        <div class="stat-value">8</div>
+        <p>reportes disponibles</p>
+    </div>
+    
+    <div class="stat-card">
+        <h3>Formatos</h3>
+        <div class="stat-value">3</div>
+        <p>PDF, Excel, Vista web</p>
+    </div>
+</div>
+
+<div class="actions">
+    <h3>Reportes Disponibles</h3>
+    <div class="action-grid">
+        <a href="/accounting/balance-sheet/" class="action-card">
+            <h4>📊 Balance General</h4>
+            <p>Estado de situación financiera</p>
+            <small>Activos, Pasivos y Patrimonio</small>
+        </a>
+        
+        <a href="/accounting/income-statement-report/" class="action-card">
+            <h4>💰 Estado de Resultados</h4>
+            <p>Pérdidas y ganancias</p>
+            <small>Ingresos, gastos y utilidad neta</small>
+        </a>
+        
+        <a href="/accounting/cash-flow-report/" class="action-card">
+            <h4>💧 Flujo de Caja</h4>
+            <p>Movimientos de efectivo</p>
+            <small>Actividades de operación, inversión y financiamiento</small>
+        </a>
+        
+        <a href="/accounting/trial-balance-report/" class="action-card">
+            <h4>⚖️ Balance de Comprobación</h4>
+            <p>Sumas y saldos</p>
+            <small>Saldos iniciales, movimientos y finales</small>
+        </a>
+        
+        <a href="/accounting/journal-book-report/" class="action-card">
+            <h4>📑 Libro Diario</h4>
+            <p>Registro cronológico de asientos</p>
+            <small>Todos los asientos contables del período</small>
+        </a>
+        
+        <a href="/accounting/general-ledger-report/" class="action-card">
+            <h4>📚 Libro Mayor</h4>
+            <p>Movimientos detallados por cuenta</p>
+            <small>Saldos y movimientos individuales</small>
+        </a>
+    </div>
+</div>
+
+<div class="companies-section">
+    <h3>Seleccionar Empresa para Reportes</h3>
+    {% for company_user in user_companies %}
+    <div class="company-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h4>{{ company_user.company.trade_name }}</h4>
+                <p style="color: #6b7280;">RUC: {{ company_user.company.ruc }}</p>
+                <p style="color: #6b7280;">{{ company_user.company.legal_name }}</p>
+            </div>
+            <div>
+                <span style="background: #667eea; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem;">
+                    {{ company_user.get_role_display }}
+                </span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

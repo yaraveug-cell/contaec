@@ -1,0 +1,61 @@
+[
+  {
+    "model": "core.country",
+    "pk": 1,
+    "fields": {
+      "code": "EC",
+      "name": "Ecuador",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.currency",
+    "pk": 1,
+    "fields": {
+      "code": "USD",
+      "name": "Dólar Estadounidense",
+      "symbol": "$",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.documenttype",
+    "pk": 1,
+    "fields": {
+      "code": "CI",
+      "name": "Cédula de Identidad",
+      "mask": "####-###-###",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.documenttype",
+    "pk": 2,
+    "fields": {
+      "code": "RUC",
+      "name": "Registro Único de Contribuyentes",
+      "mask": "#############",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.documenttype",
+    "pk": 3,
+    "fields": {
+      "code": "PA",
+      "name": "Pasaporte",
+      "mask": "",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  }
+]

@@ -1,0 +1,116 @@
+/* ========================================================
+   ESTILOS LIMPIOS PARA LÍNEAS DE FACTURA - DJANGO ADMIN
+   ======================================================== */
+
+/* Configuración base para tablas inline */
+.dynamic-invoiceline_set-group .tabular table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+/* ========================================================
+   DISTRIBUCIÓN DE COLUMNAS OPTIMIZADA
+   ======================================================== */
+
+/* Encabezados de tabla - MAPEO CORREGIDO según estructura DOM real */
+.dynamic-invoiceline_set-group .tabular thead th:nth-child(1) { width: 40px; }   /* ORIGINAL (campos ocultos Django) */
+.dynamic-invoiceline_set-group .tabular thead th:nth-child(2) { width: 35%; }    /* Producto - MÁS GRANDE */
+.dynamic-invoiceline_set-group .tabular thead th:nth-child(3) { width: 10%; }    /* Stock (informativo) */
+.dynamic-invoiceline_set-group .tabular thead th:nth-child(4) { width: 8%; }     /* Cantidad */
+.dynamic-invoiceline_set-group .tabular thead th:nth-child(5) { width: 12%; }    /* Precio unitario */
+.dynamic-invoiceline_set-group .tabular thead th:nth-child(6) { width: 8%; }     /* Descuento */
+.dynamic-invoiceline_set-group .tabular thead th:nth-child(7) { width: 8%; }     /* Tasa IVA */
+.dynamic-invoiceline_set-group .tabular thead th:nth-child(8) { width: 12%; }    /* Total línea */
+.dynamic-invoiceline_set-group .tabular thead th:nth-child(9) { width: 40px; }   /* Eliminar */
+
+/* Celdas de datos - MAPEO CORREGIDO según estructura DOM real */
+.dynamic-invoiceline_set-group .tabular tbody td:nth-child(1) { width: 40px; }   /* ORIGINAL (campos ocultos Django) */
+.dynamic-invoiceline_set-group .tabular tbody td:nth-child(2) { width: 35%; }    /* Producto - MÁS GRANDE */
+.dynamic-invoiceline_set-group .tabular tbody td:nth-child(3) { width: 10%; }    /* Stock (informativo) */
+.dynamic-invoiceline_set-group .tabular tbody td:nth-child(4) { width: 8%; }     /* Cantidad */
+.dynamic-invoiceline_set-group .tabular tbody td:nth-child(5) { width: 12%; }    /* Precio unitario */
+.dynamic-invoiceline_set-group .tabular tbody td:nth-child(6) { width: 8%; }     /* Descuento */
+.dynamic-invoiceline_set-group .tabular tbody td:nth-child(7) { width: 8%; }     /* Tasa IVA */
+.dynamic-invoiceline_set-group .tabular tbody td:nth-child(8) { width: 12%; }    /* Total línea */
+.dynamic-invoiceline_set-group .tabular tbody td:nth-child(9) { width: 40px; }   /* Eliminar */
+
+/* ========================================================
+   ESTILOS ESPECÍFICOS PARA CAMPO PRODUCTO
+   ======================================================== */
+
+/* Contenedor del campo producto */
+.dynamic-invoiceline_set-group .field-product {
+    width: 100%;
+}
+
+/* Select de producto - usar todo el ancho disponible */
+.dynamic-invoiceline_set-group .field-product select {
+    width: 100%;
+    min-width: 200px;
+}
+
+/* Contenedor Select2 para autocompletado */
+.dynamic-invoiceline_set-group .field-product .select2-container {
+    width: 100% !important;
+}
+
+.dynamic-invoiceline_set-group .field-product .select2-container .select2-selection {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+/* ========================================================
+   MEJORAS VISUALES GENERALES
+   ======================================================== */
+
+/* Espaciado mejorado para campos */
+.dynamic-invoiceline_set-group .tabular input,
+.dynamic-invoiceline_set-group .tabular select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Campos numéricos centrados */
+.dynamic-invoiceline_set-group .tabular input[type="number"] {
+    text-align: right;
+}
+
+/* Campo de total (readonly) con estilo distintivo */
+.dynamic-invoiceline_set-group .field-line_total input {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* ========================================================
+   RESPONSIVE PARA PANTALLAS PEQUEÑAS
+   ======================================================== */
+
+@media (max-width: 1200px) {
+    .dynamic-invoiceline_set-group .tabular thead th:nth-child(2),
+    .dynamic-invoiceline_set-group .tabular tbody td:nth-child(2) {
+        width: 30%; /* Reducir producto en pantallas medianas */
+    }
+    /* Ajustar stock también */
+    .dynamic-invoiceline_set-group .tabular thead th:nth-child(3),
+    .dynamic-invoiceline_set-group .tabular tbody td:nth-child(3) {
+        width: 8%; /* Reducir stock ligeramente */
+    }
+}
+
+@media (max-width: 768px) {
+    .dynamic-invoiceline_set-group .tabular thead th:nth-child(2),
+    .dynamic-invoiceline_set-group .tabular tbody td:nth-child(2) {
+        width: 25%; /* Reducir producto más en pantallas pequeñas */
+    }
+    /* Ocultar stock en móviles */
+    .dynamic-invoiceline_set-group .tabular thead th:nth-child(3),
+    .dynamic-invoiceline_set-group .tabular tbody td:nth-child(3) {
+        display: none; /* Ocultar stock en móviles */
+    }
+}

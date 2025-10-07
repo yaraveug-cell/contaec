@@ -1,0 +1,218 @@
+[
+  {
+    "model": "companies.economicactivity",
+    "pk": 1,
+    "fields": {
+      "code": "A01",
+      "description": "Agricultura, ganadería, silvicultura y pesca",
+      "parent": null,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 2,
+    "fields": {
+      "code": "A0111",
+      "description": "Cultivo de cereales (excepto arroz), legumbres y semillas oleaginosas",
+      "parent": 1,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 3,
+    "fields": {
+      "code": "C10",
+      "description": "Elaboración de productos alimenticios",
+      "parent": null,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 4,
+    "fields": {
+      "code": "C1010",
+      "description": "Elaboración y conservación de carne",
+      "parent": 3,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 5,
+    "fields": {
+      "code": "F41",
+      "description": "Construcción de edificios",
+      "parent": null,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 6,
+    "fields": {
+      "code": "F4100",
+      "description": "Construcción de edificios",
+      "parent": 5,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 7,
+    "fields": {
+      "code": "G46",
+      "description": "Comercio al por mayor, excepto el de vehículos automotores y motocicletas",
+      "parent": null,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 8,
+    "fields": {
+      "code": "G4690",
+      "description": "Comercio al por mayor no especializado",
+      "parent": 7,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 9,
+    "fields": {
+      "code": "G47",
+      "description": "Comercio al por menor, excepto el de vehículos automotores y motocicletas",
+      "parent": null,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 10,
+    "fields": {
+      "code": "G4711",
+      "description": "Comercio al por menor en establecimientos no especializados con surtido compuesto principalmente de alimentos, bebidas o tabaco",
+      "parent": 9,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 11,
+    "fields": {
+      "code": "I55",
+      "description": "Alojamiento",
+      "parent": null,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 12,
+    "fields": {
+      "code": "I5510",
+      "description": "Actividades de alojamiento para estancias cortas",
+      "parent": 11,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 13,
+    "fields": {
+      "code": "I56",
+      "description": "Actividades de servicio de comidas y bebidas",
+      "parent": null,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 14,
+    "fields": {
+      "code": "I5610",
+      "description": "Actividades de restaurantes y de servicio móvil de comidas",
+      "parent": 13,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 15,
+    "fields": {
+      "code": "J62",
+      "description": "Programación informática, consultoría de informática y actividades conexas",
+      "parent": null,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 16,
+    "fields": {
+      "code": "J6201",
+      "description": "Programación informática",
+      "parent": 15,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 17,
+    "fields": {
+      "code": "M69",
+      "description": "Actividades jurídicas y de contabilidad",
+      "parent": null,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "companies.economicactivity",
+    "pk": 18,
+    "fields": {
+      "code": "M6920",
+      "description": "Actividades de contabilidad, teneduría de libros y auditoría; consultoría fiscal",
+      "parent": 17,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  }
+]

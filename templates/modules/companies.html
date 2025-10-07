@@ -1,0 +1,124 @@
+{% extends 'modules/base_module.html' %}
+
+{% block breadcrumb %}Empresas{% endblock %}
+
+{% block content %}
+<div class="module-header">
+    <div class="module-icon">🏢</div>
+    <h1>Mis Empresas</h1>
+    <p>Gestiona la información de las empresas asignadas</p>
+</div>
+
+<div class="stats">
+    <div class="stat-card">
+        <h3>Empresas Asignadas</h3>
+        <div class="stat-value">{{ user_companies.count }}</div>
+        <p>empresas disponibles</p>
+    </div>
+    
+    <div class="stat-card">
+        <h3>Roles</h3>
+        <div class="stat-value">{{ user_companies.count }}</div>
+        <p>asignaciones activas</p>
+    </div>
+    
+    <div class="stat-card">
+        <h3>Estado</h3>
+        <div class="stat-value">✓</div>
+        <p>Acceso activo</p>
+    </div>
+</div>
+
+<div class="companies-section">
+    <h3>Empresas Disponibles</h3>
+    
+    {% if user_companies %}
+        {% for company_user in user_companies %}
+        <div class="company-card" style="border-left: 4px solid #667eea;">
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+                <div style="flex: 1;">
+                    <h4 style="color: #374151; margin-bottom: 0.5rem;">
+                        {{ company_user.company.trade_name }}
+                    </h4>
+                    <p style="color: #6b7280; margin-bottom: 0.25rem;">
+                        <strong>Razón Social:</strong> {{ company_user.company.legal_name }}
+                    </p>
+                    <p style="color: #6b7280; margin-bottom: 0.25rem;">
+                        <strong>RUC:</strong> {{ company_user.company.ruc }}
+                    </p>
+                    <p style="color: #6b7280; margin-bottom: 0.25rem;">
+                        <strong>Tipo:</strong> {{ company_user.company.company_type }}
+                    </p>
+                    <p style="color: #6b7280; margin-bottom: 0.25rem;">
+                        <strong>Ciudad:</strong> {{ company_user.company.city }}
+                    </p>
+                    {% if company_user.company.phone %}
+                    <p style="color: #6b7280; margin-bottom: 0.25rem;">
+                        <strong>Teléfono:</strong> {{ company_user.company.phone }}
+                    </p>
+                    {% endif %}
+                    {% if company_user.company.email %}
+                    <p style="color: #6b7280;">
+                        <strong>Email:</strong> {{ company_user.company.email }}
+                    </p>
+                    {% endif %}
+                </div>
+                <div style="text-align: right;">
+                    <span style="background: #667eea; color: white; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.9rem; display: inline-block; margin-bottom: 1rem;">
+                        {{ company_user.get_role_display }}
+                    </span>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        {% if user.is_staff %}
+                        <a href="/admin/companies/company/{{ company_user.company.id }}/change/" class="btn" style="font-size: 0.8rem; padding: 0.25rem 0.5rem;">
+                            ✏️ Editar
+                        </a>
+                        {% endif %}
+                        <a href="/modulos/contabilidad/" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.25rem 0.5rem;">
+                            📊 Contabilidad
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div style="text-align: center; padding: 3rem; color: #6b7280;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🏢</div>
+            <h3>No tienes empresas asignadas</h3>
+            <p>Contacta al administrador para obtener acceso a empresas.</p>
+            {% if user.is_staff %}
+            <a href="/admin/companies/company/add/" class="btn" style="margin-top: 1rem;">
+                ➕ Crear Nueva Empresa
+            </a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+
+{% if user.is_staff %}
+<div class="actions">
+    <h3>Acciones Administrativas</h3>
+    <div class="action-grid">
+        <a href="/admin/companies/company/" class="action-card">
+            <h4>🏢 Gestionar Empresas</h4>
+            <p>Crear y editar empresas</p>
+        </a>
+        
+        <a href="/admin/companies/companyuser/" class="action-card">
+            <h4>👥 Asignar Usuarios</h4>
+            <p>Gestionar accesos por empresa</p>
+        </a>
+        
+        <a href="/admin/companies/companytype/" class="action-card">
+            <h4>📋 Tipos de Empresa</h4>
+            <p>Configurar tipos societarios</p>
+        </a>
+        
+        <a href="/admin/companies/economicactivity/" class="action-card">
+            <h4>💼 Actividades Económicas</h4>
+            <p>Códigos CIIU</p>
+        </a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

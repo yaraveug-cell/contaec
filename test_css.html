@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prueba de Anchos CSS - Líneas de Factura</title>
+    <style>
+        /* Simulando estructura Django Admin */
+        .inline-group {
+            border: 1px solid #ccc;
+            margin: 10px 0;
+        }
+        
+        .form-row {
+            display: flex;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+        }
+        
+        .form-row > div {
+            border: 1px solid #999;
+            padding: 5px;
+            background: #f0f0f0;
+        }
+        
+        /* Estilos originales problemáticos */
+        select[name*="product"] {
+            width: 180px !important;
+        }
+        
+        /* Nuestros estilos con máxima especificidad */
+        html body .module .inline-group .tabular .form-row .field-product,
+        html body .module .inline-group .form-row .field-product,
+        html body .inline-group .tabular .form-row .field-product,
+        html body .inline-group .form-row .field-product {
+            width: 35% !important;
+            background: yellow !important; /* Para visualizar si funciona */
+        }
+        
+        .field-quantity { width: 10% !important; background: lightblue !important; }
+        .field-unit_price { width: 12% !important; background: lightgreen !important; }
+        .field-discount { width: 8% !important; background: lightcoral !important; }
+        .field-iva_rate { width: 8% !important; background: lightpink !important; }
+        .field-line_total { width: 15% !important; background: lightgray !important; }
+    </style>
+</head>
+<body>
+    <div class="module">
+        <div class="inline-group">
+            <div class="form-row">
+                <div class="field-product">Producto (35%)</div>
+                <div class="field-quantity">Cantidad (10%)</div>
+                <div class="field-unit_price">Precio (12%)</div>
+                <div class="field-discount">Descuento (8%)</div>
+                <div class="field-iva_rate">IVA (8%)</div>
+                <div class="field-line_total">Total (15%)</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="inline-group">
+        <div class="form-row">
+            <div class="field-product">
+                <select name="lines-0-product">
+                    <option>Producto con select problemático</option>
+                </select>
+            </div>
+            <div class="field-quantity">10</div>
+            <div class="field-unit_price">$100.00</div>
+            <div class="field-discount">5%</div>
+            <div class="field-iva_rate">15%</div>
+            <div class="field-line_total">$1,095.00</div>
+        </div>
+    </div>
+    
+    <script>
+        console.log('Estructura HTML de prueba cargada');
+        
+        // Función para inspeccionar estilos aplicados
+        function inspectStyles() {
+            const productField = document.querySelector('.field-product');
+            if (productField) {
+                const styles = window.getComputedStyle(productField);
+                console.log('Estilos del campo producto:', {
+                    width: styles.width,
+                    minWidth: styles.minWidth,
+                    maxWidth: styles.maxWidth,
+                    flex: styles.flex,
+                    display: styles.display
+                });
+            }
+            
+            const productSelect = document.querySelector('select[name*="product"]');
+            if (productSelect) {
+                const selectStyles = window.getComputedStyle(productSelect);
+                console.log('Estilos del select producto:', {
+                    width: selectStyles.width,
+                    minWidth: selectStyles.minWidth,
+                    maxWidth: selectStyles.maxWidth
+                });
+            }
+        }
+        
+        // Ejecutar inspección cuando esté listo
+        setTimeout(inspectStyles, 100);
+    </script>
+</body>
+</html>

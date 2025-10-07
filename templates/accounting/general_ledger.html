@@ -1,0 +1,761 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reports.css' %}">
+<style>
+    .general-ledger-container {
+        padding: 20px;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+    
+    .general-ledger-header {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    
+    .controls-section {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 25px;
+    }
+    
+    .controls-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        align-items: end;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #555;
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    
+    .btn-success {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        padding: 12px 25px;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        font-weight: 600;
+        transition: transform 0.2s ease;
+    }
+    
+    .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .accounts-section {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 25px;
+        overflow: hidden;
+    }
+    
+    .accounts-header {
+        background: #f8f9fa;
+        padding: 20px;
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .accounts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 15px;
+        padding: 20px;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    .account-card {
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: white;
+    }
+    
+    .account-card:hover {
+        border-color: #28a745;
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.15);
+        transform: translateY(-2px);
+    }
+    
+    .account-card.selected {
+        border-color: #28a745;
+        background: #f8fff9;
+        box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.25);
+    }
+    
+    .account-code {
+        font-weight: 700;
+        font-size: 16px;
+        color: #28a745;
+        margin-bottom: 5px;
+    }
+    
+    .account-name {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 8px;
+        line-height: 1.3;
+    }
+    
+    .account-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: #6c757d;
+    }
+    
+    .movements-count {
+        background: #e9ecef;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-weight: 500;
+    }
+    
+    .results-section {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-top: 25px;
+        overflow: hidden;
+    }
+    
+    .results-header {
+        background: #f8f9fa;
+        padding: 20px;
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .export-buttons {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .btn-primary {
+        background: #007bff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .account-summary {
+        background: #e8f5e8;
+        padding: 15px;
+        border-left: 4px solid #28a745;
+        margin-bottom: 20px;
+    }
+    
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .summary-item h4 {
+        margin: 0;
+        font-size: 14px;
+        color: #6c757d;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+    
+    .summary-item .value {
+        font-size: 18px;
+        font-weight: 700;
+        color: #28a745;
+        margin-top: 5px;
+        font-family: 'Courier New', monospace;
+    }
+    
+    .ledger-table {
+        width: 100%;
+        min-width: 800px;
+        border-collapse: collapse;
+    }
+    
+    .ledger-table th {
+        background: #28a745;
+        color: white;
+        padding: 12px 8px;
+        text-align: center;
+        font-weight: 600;
+        border: 1px solid #20c997;
+        font-size: 12px;
+    }
+    
+    .ledger-table td {
+        padding: 8px;
+        border: 1px solid #e9ecef;
+        font-size: 13px;
+    }
+    
+    .ledger-table tbody tr:nth-child(even) {
+        background: #f8f9fa;
+    }
+    
+    .ledger-table tbody tr:hover {
+        background: #e8f5e8;
+    }
+    
+    .date-col {
+        text-align: center;
+        width: 100px;
+        font-weight: 500;
+    }
+    
+    .journal-col {
+        text-align: center;
+        width: 80px;
+        font-weight: 600;
+        color: #007bff;
+    }
+    
+    .description-col {
+        max-width: 250px;
+        word-wrap: break-word;
+        color: #495057;
+    }
+    
+    .amount-col {
+        text-align: right;
+        font-family: 'Courier New', monospace;
+        font-weight: 600;
+        width: 100px;
+    }
+    
+    .debit-amount {
+        color: #dc3545;
+    }
+    
+    .credit-amount {
+        color: #28a745;
+    }
+    
+    .balance-col {
+        text-align: right;
+        font-family: 'Courier New', monospace;
+        font-weight: 700;
+        width: 120px;
+        background: #f8f9fa;
+        color: #495057;
+    }
+    
+    .totals-row {
+        background: #e9ecef !important;
+        font-weight: 700;
+        font-size: 14px;
+    }
+    
+    .totals-row td {
+        border-top: 2px solid #28a745;
+        border-bottom: 2px solid #28a745;
+    }
+    
+    .loading {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+    }
+    
+    .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 20px 0;
+        border: 1px solid #f5c6cb;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+    }
+    
+    .initial-balance {
+        background: #d1ecf1;
+        color: #0c5460;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+        border-left: 4px solid #17a2b8;
+    }
+    
+    @media (max-width: 768px) {
+        .general-ledger-container {
+            padding: 10px;
+        }
+        
+        .controls-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .accounts-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .results-header {
+            flex-direction: column;
+            gap: 15px;
+            align-items: stretch;
+        }
+        
+        .export-buttons {
+            justify-content: center;
+        }
+        
+        .summary-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="general-ledger-container">
+    <!-- Header -->
+    <div class="general-ledger-header">
+        <h1 class="mb-0">Libro Mayor</h1>
+        <p class="mb-0">Movimientos detallados por cuenta contable</p>
+    </div>
+    
+    <!-- Controls -->
+    <div class="controls-section">
+        <form id="ledgerForm">
+            <div class="controls-grid">
+                <div class="form-group">
+                    <label for="company_id">Empresa *</label>
+                    <select id="company_id" name="company_id" class="form-control" required>
+                        <option value="">Seleccione una empresa</option>
+                        {% for company in companies %}
+                            <option value="{{ company.id }}">{{ company.trade_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="start_date">Fecha Inicial</label>
+                    <input type="date" id="start_date" name="start_date" class="form-control">
+                    <small class="text-muted">Dejar vacío para incluir desde el inicio</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="end_date">Fecha Final *</label>
+                    <input type="date" id="end_date" name="end_date" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-search"></i> Cargar Cuentas
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Loading -->
+    <div id="loading" class="loading" style="display: none;">
+        <i class="fas fa-spinner fa-spin fa-2x"></i>
+        <p>Cargando cuentas...</p>
+    </div>
+    
+    <!-- Error -->
+    <div id="error" class="error-message" style="display: none;"></div>
+    
+    <!-- Accounts Section -->
+    <div id="accountsSection" class="accounts-section" style="display: none;">
+        <div class="accounts-header">
+            <div>
+                <h3 id="companyNameAccounts" class="mb-1"></h3>
+                <p class="mb-0 text-muted">Seleccione una cuenta para ver su libro mayor</p>
+            </div>
+            <div>
+                <span id="accountsCount" class="badge badge-success"></span>
+            </div>
+        </div>
+        
+        <div id="accountsGrid" class="accounts-grid">
+            <!-- Accounts will be loaded here -->
+        </div>
+    </div>
+    
+    <!-- Results -->
+    <div id="results" class="results-section" style="display: none;">
+        <div class="results-header">
+            <div>
+                <h3 id="selectedAccountInfo" class="mb-1"></h3>
+                <p id="reportPeriod" class="mb-0 text-muted"></p>
+            </div>
+            <div class="export-buttons">
+                <a id="exportPdf" href="#" class="btn btn-primary">
+                    <i class="fas fa-file-pdf"></i> Exportar PDF
+                </a>
+            </div>
+        </div>
+        
+        <!-- Account Summary -->
+        <div id="accountSummary" class="account-summary">
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <h4>Saldo Inicial</h4>
+                    <div id="initialBalance" class="value">$0.00</div>
+                </div>
+                <div class="summary-item">
+                    <h4>Total Débitos</h4>
+                    <div id="totalDebits" class="value">$0.00</div>
+                </div>
+                <div class="summary-item">
+                    <h4>Total Créditos</h4>
+                    <div id="totalCredits" class="value">$0.00</div>
+                </div>
+                <div class="summary-item">
+                    <h4>Saldo Final</h4>
+                    <div id="finalBalance" class="value">$0.00</div>
+                </div>
+                <div class="summary-item">
+                    <h4>Movimientos</h4>
+                    <div id="movementsCount" class="value">0</div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="overflow-x: auto; padding: 20px;">
+            <table class="ledger-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Asiento</th>
+                        <th>Descripción</th>
+                        <th>Débito</th>
+                        <th>Crédito</th>
+                        <th>Saldo</th>
+                    </tr>
+                </thead>
+                <tbody id="ledgerData">
+                    <!-- Data will be loaded here -->
+                </tbody>
+                <tfoot id="ledgerTotals">
+                    <!-- Totals will be loaded here -->
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Empty State -->
+    <div id="emptyState" class="empty-state" style="display: none;">
+        <i class="fas fa-book fa-3x text-muted mb-3"></i>
+        <h4>Seleccione empresa y período</h4>
+        <p>Luego elija una cuenta para ver su libro mayor detallado</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('ledgerForm');
+    const loading = document.getElementById('loading');
+    const error = document.getElementById('error');
+    const accountsSection = document.getElementById('accountsSection');
+    const results = document.getElementById('results');
+    const emptyState = document.getElementById('emptyState');
+    
+    let selectedAccountId = null;
+    let currentCompanyId = null;
+    let currentStartDate = null;
+    let currentEndDate = null;
+    
+    // Set today's date as default end date
+    document.getElementById('end_date').valueAsDate = new Date();
+    
+    // Show empty state initially
+    emptyState.style.display = 'block';
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        loadAccounts();
+    });
+    
+    function loadAccounts() {
+        const formData = new FormData(form);
+        const params = new URLSearchParams();
+        
+        for (let [key, value] of formData.entries()) {
+            if (value) params.append(key, value);
+        }
+        
+        if (!params.get('company_id')) {
+            showError('Debe seleccionar una empresa');
+            return;
+        }
+        
+        // Store current parameters
+        currentCompanyId = params.get('company_id');
+        currentStartDate = params.get('start_date');
+        currentEndDate = params.get('end_date');
+        selectedAccountId = null;
+        
+        // Show loading
+        hideAllSections();
+        loading.style.display = 'block';
+        
+        // Make API request
+        fetch(`/accounting/general-ledger-accounts/?${params.toString()}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al obtener cuentas');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                displayAccounts(data);
+            })
+            .catch(err => {
+                showError(err.message);
+            })
+            .finally(() => {
+                loading.style.display = 'none';
+            });
+    }
+    
+    function displayAccounts(data) {
+        hideAllSections();
+        
+        // Update company info
+        document.getElementById('companyNameAccounts').textContent = data.company.legal_name;
+        document.getElementById('accountsCount').textContent = `${data.accounts.length} cuentas`;
+        
+        // Display accounts
+        const accountsGrid = document.getElementById('accountsGrid');
+        accountsGrid.innerHTML = '';
+        
+        if (data.accounts.length === 0) {
+            accountsGrid.innerHTML = `
+                <div class="text-center" style="grid-column: 1 / -1;">
+                    <p class="text-muted">No hay cuentas con movimientos para esta empresa</p>
+                </div>
+            `;
+        } else {
+            data.accounts.forEach(account => {
+                const accountCard = document.createElement('div');
+                accountCard.className = 'account-card';
+                accountCard.dataset.accountId = account.id;
+                accountCard.innerHTML = `
+                    <div class="account-code">${account.code}</div>
+                    <div class="account-name">${account.name}</div>
+                    <div class="account-info">
+                        <span>${account.account_type}</span>
+                        <span class="movements-count">${account.movements_count} mov.</span>
+                    </div>
+                `;
+                
+                accountCard.addEventListener('click', () => selectAccount(account.id));
+                accountsGrid.appendChild(accountCard);
+            });
+        }
+        
+        accountsSection.style.display = 'block';
+    }
+    
+    function selectAccount(accountId) {
+        if (selectedAccountId === accountId) return;
+        
+        // Update UI selection
+        document.querySelectorAll('.account-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+        document.querySelector(`[data-account-id="${accountId}"]`).classList.add('selected');
+        
+        selectedAccountId = accountId;
+        loadLedgerData();
+    }
+    
+    function loadLedgerData() {
+        if (!selectedAccountId) return;
+        
+        const params = new URLSearchParams();
+        params.append('company_id', currentCompanyId);
+        params.append('account_id', selectedAccountId);
+        if (currentStartDate) params.append('start_date', currentStartDate);
+        params.append('end_date', currentEndDate);
+        
+        // Show loading in results area
+        results.style.display = 'block';
+        document.getElementById('ledgerData').innerHTML = '<tr><td colspan="6" class="text-center">Cargando movimientos...</td></tr>';
+        
+        // Make API request
+        fetch(`/accounting/general-ledger-data/?${params.toString()}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al obtener datos del libro mayor');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                displayLedgerData(data);
+            })
+            .catch(err => {
+                showError(err.message);
+                results.style.display = 'none';
+            });
+    }
+    
+    function displayLedgerData(data) {
+        // Update account info
+        document.getElementById('selectedAccountInfo').textContent = 
+            `${data.account.code} - ${data.account.name}`;
+        
+        // Update period
+        let periodText = '';
+        if (data.start_date) {
+            periodText = `Del ${formatDate(data.start_date)} al ${formatDate(data.end_date)}`;
+        } else {
+            periodText = `Al ${formatDate(data.end_date)}`;
+        }
+        document.getElementById('reportPeriod').textContent = periodText;
+        
+        // Update export link
+        const exportParams = new URLSearchParams();
+        exportParams.append('company_id', data.company.id);
+        exportParams.append('account_id', data.account.id);
+        if (data.start_date) exportParams.append('start_date', data.start_date);
+        exportParams.append('end_date', data.end_date);
+        
+        document.getElementById('exportPdf').href = 
+            `/accounting/general-ledger-pdf/?${exportParams.toString()}`;
+        
+        // Update summary
+        const ledgerData = data.ledger_data;
+        document.getElementById('initialBalance').textContent = formatCurrency(ledgerData.initial_balance);
+        document.getElementById('totalDebits').textContent = formatCurrency(ledgerData.totals.debit);
+        document.getElementById('totalCredits').textContent = formatCurrency(ledgerData.totals.credit);
+        document.getElementById('finalBalance').textContent = formatCurrency(ledgerData.totals.final_balance);
+        document.getElementById('movementsCount').textContent = ledgerData.totals.movement_count;
+        
+        // Display movements
+        const tbody = document.getElementById('ledgerData');
+        const tfoot = document.getElementById('ledgerTotals');
+        
+        tbody.innerHTML = '';
+        tfoot.innerHTML = '';
+        
+        if (ledgerData.movements.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="text-center text-muted">
+                        No hay movimientos en el período seleccionado
+                    </td>
+                </tr>
+            `;
+        } else {
+            // Add movements
+            ledgerData.movements.forEach(movement => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="date-col">${formatDate(movement.date)}</td>
+                    <td class="journal-col">${movement.journal_number}</td>
+                    <td class="description-col">${movement.description}</td>
+                    <td class="amount-col debit-amount">${formatAmount(movement.debit)}</td>
+                    <td class="amount-col credit-amount">${formatAmount(movement.credit)}</td>
+                    <td class="balance-col">${formatCurrency(movement.balance)}</td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            // Add totals row
+            const totalsRow = document.createElement('tr');
+            totalsRow.className = 'totals-row';
+            totalsRow.innerHTML = `
+                <td colspan="3" style="text-align: center; font-weight: bold;">TOTALES</td>
+                <td class="amount-col debit-amount">${formatCurrency(ledgerData.totals.debit)}</td>
+                <td class="amount-col credit-amount">${formatCurrency(ledgerData.totals.credit)}</td>
+                <td class="balance-col">${formatCurrency(ledgerData.totals.final_balance)}</td>
+            `;
+            tfoot.appendChild(totalsRow);
+        }
+        
+        results.style.display = 'block';
+    }
+    
+    function formatAmount(amount) {
+        if (amount === 0 || amount === '0.00') return '';
+        return formatCurrency(amount);
+    }
+    
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('es-EC', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2
+        }).format(amount);
+    }
+    
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('es-EC');
+    }
+    
+    function showError(message) {
+        hideAllSections();
+        error.textContent = message;
+        error.style.display = 'block';
+    }
+    
+    function hideAllSections() {
+        loading.style.display = 'none';
+        error.style.display = 'none';
+        accountsSection.style.display = 'none';
+        results.style.display = 'none';
+        emptyState.style.display = 'none';
+    }
+});
+</script>
+{% endblock %}

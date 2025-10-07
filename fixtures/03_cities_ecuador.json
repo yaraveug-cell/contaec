@@ -1,0 +1,182 @@
+[
+  {
+    "model": "core.city",
+    "pk": 1,
+    "fields": {
+      "province": 17,
+      "code": "1701",
+      "name": "Quito",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 2,
+    "fields": {
+      "province": 9,
+      "code": "0901",
+      "name": "Guayaquil",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 3,
+    "fields": {
+      "province": 1,
+      "code": "0101",
+      "name": "Cuenca",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 4,
+    "fields": {
+      "province": 23,
+      "code": "2301",
+      "name": "Santo Domingo",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 5,
+    "fields": {
+      "province": 18,
+      "code": "1801",
+      "name": "Ambato",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 6,
+    "fields": {
+      "province": 13,
+      "code": "1301",
+      "name": "Portoviejo",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 7,
+    "fields": {
+      "province": 9,
+      "code": "0902",
+      "name": "Durán",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 8,
+    "fields": {
+      "province": 7,
+      "code": "0701",
+      "name": "Machala",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 9,
+    "fields": {
+      "province": 8,
+      "code": "0801",
+      "name": "Esmeraldas",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 10,
+    "fields": {
+      "province": 10,
+      "code": "1001",
+      "name": "Ibarra",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 11,
+    "fields": {
+      "province": 12,
+      "code": "1201",
+      "name": "Babahoyo",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 12,
+    "fields": {
+      "province": 6,
+      "code": "0601",
+      "name": "Riobamba",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 13,
+    "fields": {
+      "province": 11,
+      "code": "1101",
+      "name": "Loja",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 14,
+    "fields": {
+      "province": 5,
+      "code": "0501",
+      "name": "Latacunga",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.city",
+    "pk": 15,
+    "fields": {
+      "province": 13,
+      "code": "1302",
+      "name": "Manta",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  }
+]

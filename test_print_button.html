@@ -1,0 +1,68 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Test Botón Impresión</title>
+        <style>
+            .btn-print {
+                background: green;
+                color: white;
+                padding: 8px 16px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+            }
+            .print-button-inline {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Test Botón de Impresión</h1>
+        
+        <div class="submit-row">
+            <input type="submit" value="Guardar" />
+            <input type="submit" value="Guardar y continuar editando" />
+        </div>
+        
+        <a href="#" class="btn-print print-button-inline" style="display: none;">
+            <span class="icon">🖨️</span>
+            <span class="text">Imprimir PDF</span>
+        </a>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('🔍 Test: DOM cargado');
+                
+                function repositionPrintButtons() {
+                    console.log('🔍 Test: Ejecutando repositionPrintButtons');
+                    
+                    const printButtons = document.querySelectorAll('.print-button-inline');
+                    console.log('🔍 Test: Botones encontrados:', printButtons.length);
+                    
+                    printButtons.forEach(function(button) {
+                        const submitRow = document.querySelector('.submit-row');
+                        if (submitRow) {
+                            console.log('🔍 Test: Submit-row encontrado');
+                            
+                            const clonedButton = button.cloneNode(true);
+                            clonedButton.style.display = 'inline-flex';
+                            clonedButton.classList.add('repositioned');
+                            
+                            submitRow.appendChild(clonedButton);
+                            console.log('🔍 Test: Botón clonado y agregado');
+                        } else {
+                            console.log('❌ Test: Submit-row NO encontrado');
+                        }
+                    });
+                }
+                
+                repositionPrintButtons();
+            });
+        </script>
+    </body>
+    </html>
+    

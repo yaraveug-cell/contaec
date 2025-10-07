@@ -1,0 +1,62 @@
+/* Estilos específicos para líneas de asiento contable */
+
+/* Forzar que el campo descripción sea un input de una sola línea */
+.inline-group .form-row input[name*="description"],
+.inline-group .form-row input.description-single-line {
+    height: 28px !important;
+    min-height: 28px !important;
+    max-height: 28px !important;
+    resize: none !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    white-space: nowrap !important;
+    width: 600px !important;
+    display: inline-block !important;
+}
+
+/* Asegurar que NO sea textarea */
+.inline-group .form-row textarea[name*="description"] {
+    display: none !important;
+}
+
+/* Forzar reemplazo de textarea por input */
+.inline-group .form-row .description-single-line {
+    height: 28px !important;
+    min-height: 28px !important;
+    max-height: 28px !important;
+    resize: none !important;
+    overflow: auto !important;
+    white-space: nowrap !important;
+}
+
+/* Estilo específico para campos de asiento contable */
+.inline-group .form-row input[name*="debit"],
+.inline-group .form-row input[name*="credit"] {
+    width: 120px !important;
+    text-align: right !important;
+}
+
+.inline-group .form-row input[name*="auxiliary_code"] {
+    width: 150px !important;
+}
+
+/* Mejorar la apariencia general del inline */
+.inline-group .form-row {
+    margin-bottom: 5px;
+}
+
+.inline-group .form-row .field-description {
+    width: 600px !important;
+}
+
+/* Placeholder styling */
+.description-single-line::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* Focus styling */
+.description-single-line:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 3px rgba(74, 144, 226, 0.3);
+}

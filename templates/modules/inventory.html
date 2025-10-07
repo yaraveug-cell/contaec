@@ -1,0 +1,61 @@
+{% extends 'modules/base_module.html' %}
+
+{% block breadcrumb %}Inventarios{% endblock %}
+
+{% block content %}
+<div class="module-header">
+    <div class="module-icon">📦</div>
+    <h1>Módulo de Inventarios</h1>
+    <p>Control de stock, productos y movimientos de inventario</p>
+</div>
+
+<div class="stats">
+    <div class="stat-card">
+        <h3>Productos</h3>
+        <div class="stat-value">{{ total_products }}</div>
+        <p>productos registrados</p>
+    </div>
+    
+    <div class="stat-card">
+        <h3>Movimientos</h3>
+        <div class="stat-value">{{ total_movements }}</div>
+        <p>movimientos registrados</p>
+    </div>
+    
+    <div class="stat-card">
+        <h3>Empresas Asignadas</h3>
+        <div class="stat-value">{{ user_companies.count }}</div>
+        <p>empresas disponibles</p>
+    </div>
+</div>
+
+<div class="actions">
+    <h3>Acciones Disponibles</h3>
+    <div class="action-grid">
+        <a href="/admin/inventory/product/" class="action-card">
+            <h4>📦 Productos</h4>
+            <p>Gestionar catálogo de productos</p>
+        </a>
+        
+        <a href="/admin/inventory/stockmovement/" class="action-card">
+            <h4>📈 Movimientos</h4>
+            <p>Entradas y salidas de stock</p>
+        </a>
+        
+        <a href="/admin/inventory/warehouse/" class="action-card">
+            <h4>🏢 Bodegas</h4>
+            <p>Gestionar ubicaciones de stock</p>
+        </a>
+        
+        <a href="/admin/inventory/category/" class="action-card">
+            <h4>🏷️ Categorías</h4>
+            <p>Organizar productos por categorías</p>
+        </a>
+        
+        <a href="/admin/inventory/stock/" class="action-card">
+            <h4>📊 Stock Actual</h4>
+            <p>Consultar existencias</p>
+        </a>
+    </div>
+</div>
+{% endblock %}

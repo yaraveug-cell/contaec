@@ -1,0 +1,614 @@
+[
+  {
+    "model": "accounting.accounttype",
+    "pk": 1,
+    "fields": {
+      "code": "ASSET",
+      "name": "Activo",
+      "description": "Cuentas de activos",
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.accounttype",
+    "pk": 2,
+    "fields": {
+      "code": "LIABILITY",
+      "name": "Pasivo",
+      "description": "Cuentas de pasivos",
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.accounttype",
+    "pk": 3,
+    "fields": {
+      "code": "EQUITY",
+      "name": "Patrimonio",
+      "description": "Cuentas patrimoniales",
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.accounttype",
+    "pk": 4,
+    "fields": {
+      "code": "INCOME",
+      "name": "Ingresos",
+      "description": "Cuentas de ingresos",
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.accounttype",
+    "pk": 5,
+    "fields": {
+      "code": "EXPENSE",
+      "name": "Gastos",
+      "description": "Cuentas de gastos",
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 1,
+    "fields": {
+      "company": 1,
+      "code": "1",
+      "name": "ACTIVO",
+      "account_type": 1,
+      "parent": null,
+      "level": 1,
+      "is_detail": false,
+      "accepts_movement": false,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 2,
+    "fields": {
+      "company": 1,
+      "code": "1.1",
+      "name": "ACTIVO CORRIENTE",
+      "account_type": 1,
+      "parent": 1,
+      "level": 2,
+      "is_detail": false,
+      "accepts_movement": false,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 3,
+    "fields": {
+      "code": "1.1.1",
+      "name": "EFECTIVO Y EQUIVALENTES DE EFECTIVO",
+      "description": "Dinero en caja y bancos disponible inmediatamente",
+      "account_type": "ASSET",
+      "parent": 2,
+      "level": 3,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 4,
+    "fields": {
+      "code": "1.1.1.01",
+      "name": "CAJA GENERAL",
+      "description": "Dinero en efectivo disponible en caja",
+      "account_type": "ASSET",
+      "parent": 3,
+      "level": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 5,
+    "fields": {
+      "code": "1.1.1.02",
+      "name": "CAJA CHICA",
+      "description": "Fondo fijo para gastos menores",
+      "account_type": "ASSET",
+      "parent": 3,
+      "level": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 6,
+    "fields": {
+      "code": "1.1.1.03",
+      "name": "BANCO PICHINCHA CTE 001",
+      "description": "Cuenta corriente Banco Pichincha",
+      "account_type": "ASSET",
+      "parent": 3,
+      "level": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 7,
+    "fields": {
+      "code": "1.1.2",
+      "name": "CUENTAS POR COBRAR",
+      "description": "Derechos de cobro a favor de la empresa",
+      "account_type": "ASSET",
+      "parent": 2,
+      "level": 3,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 8,
+    "fields": {
+      "code": "1.1.2.01",
+      "name": "CLIENTES",
+      "description": "Deudas de clientes por ventas a crédito",
+      "account_type": "ASSET",
+      "parent": 7,
+      "level": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 9,
+    "fields": {
+      "code": "1.1.3",
+      "name": "INVENTARIOS",
+      "description": "Mercaderías y productos disponibles para la venta",
+      "account_type": "ASSET",
+      "parent": 2,
+      "level": 3,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 10,
+    "fields": {
+      "code": "1.1.3.01",
+      "name": "INVENTARIO DE MERCADERIAS",
+      "description": "Productos adquiridos para la venta",
+      "account_type": "ASSET",
+      "parent": 9,
+      "level": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 11,
+    "fields": {
+      "code": "1.2",
+      "name": "ACTIVO NO CORRIENTE",
+      "description": "Activos que se mantendrán por más de un año",
+      "account_type": "ASSET",
+      "parent": 1,
+      "level": 2,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 12,
+    "fields": {
+      "code": "1.2.1",
+      "name": "PROPIEDAD, PLANTA Y EQUIPO",
+      "description": "Bienes tangibles para uso en la operación",
+      "account_type": "ASSET",
+      "parent": 11,
+      "level": 3,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 13,
+    "fields": {
+      "code": "1.2.1.01",
+      "name": "TERRENOS",
+      "description": "Terrenos propiedad de la empresa",
+      "account_type": "ASSET",
+      "parent": 12,
+      "level": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 14,
+    "fields": {
+      "code": "1.2.1.02",
+      "name": "EDIFICIOS",
+      "description": "Construcciones propiedad de la empresa",
+      "account_type": "ASSET",
+      "parent": 12,
+      "level": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 15,
+    "fields": {
+      "code": "1.2.1.03",
+      "name": "MAQUINARIA Y EQUIPO",
+      "description": "Maquinaria y equipos de producción",
+      "account_type": "ASSET",
+      "parent": 12,
+      "level": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 16,
+    "fields": {
+      "code": "2",
+      "name": "PASIVO",
+      "description": "Obligaciones de la empresa",
+      "account_type": "LIABILITY",
+      "parent": null,
+      "level": 1,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 17,
+    "fields": {
+      "code": "2.1",
+      "name": "PASIVO CORRIENTE",
+      "description": "Obligaciones a pagar en el corto plazo",
+      "account_type": "LIABILITY",
+      "parent": 16,
+      "level": 2,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 18,
+    "fields": {
+      "code": "2.1.1",
+      "name": "CUENTAS POR PAGAR",
+      "description": "Obligaciones de pago a terceros",
+      "account_type": "LIABILITY",
+      "parent": 17,
+      "level": 3,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 19,
+    "fields": {
+      "code": "2.1.1.01",
+      "name": "PROVEEDORES",
+      "description": "Deudas con proveedores de mercaderías",
+      "account_type": "LIABILITY",
+      "parent": 18,
+      "level": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 20,
+    "fields": {
+      "code": "2.1.2",
+      "name": "OBLIGACIONES TRIBUTARIAS",
+      "description": "Impuestos por pagar al SRI",
+      "account_type": "LIABILITY",
+      "parent": 17,
+      "level": 3,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 21,
+    "fields": {
+      "code": "2.1.2.01",
+      "name": "IVA POR PAGAR",
+      "description": "IVA cobrado menos IVA pagado",
+      "account_type": "LIABILITY",
+      "parent": 20,
+      "level": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 22,
+    "fields": {
+      "code": "2.1.2.02",
+      "name": "IMPUESTO A LA RENTA POR PAGAR",
+      "description": "Impuesto a la renta calculado por pagar",
+      "account_type": "LIABILITY",
+      "parent": 20,
+      "level": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 23,
+    "fields": {
+      "code": "3",
+      "name": "PATRIMONIO",
+      "description": "Capital y resultados acumulados",
+      "account_type": "EQUITY",
+      "parent": null,
+      "level": 1,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 24,
+    "fields": {
+      "code": "3.1",
+      "name": "CAPITAL",
+      "description": "Aporte de los socios o accionistas",
+      "account_type": "EQUITY",
+      "parent": 23,
+      "level": 2,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 25,
+    "fields": {
+      "code": "3.1.1",
+      "name": "CAPITAL SUSCRITO Y PAGADO",
+      "description": "Capital aportado por socios",
+      "account_type": "EQUITY",
+      "parent": 24,
+      "level": 3,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 26,
+    "fields": {
+      "code": "4",
+      "name": "INGRESOS",
+      "description": "Ingresos de la actividad ordinaria",
+      "account_type": "REVENUE",
+      "parent": null,
+      "level": 1,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 27,
+    "fields": {
+      "code": "4.1",
+      "name": "INGRESOS OPERACIONALES",
+      "description": "Ingresos de la actividad principal",
+      "account_type": "REVENUE",
+      "parent": 26,
+      "level": 2,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 28,
+    "fields": {
+      "code": "4.1.1",
+      "name": "VENTAS",
+      "description": "Ingresos por ventas de mercaderías",
+      "account_type": "REVENUE",
+      "parent": 27,
+      "level": 3,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 29,
+    "fields": {
+      "code": "4.1.1.01",
+      "name": "VENTAS GRAVADAS CON IVA 15%",
+      "description": "Ventas con tarifa 15% de IVA",
+      "account_type": "REVENUE",
+      "parent": 28,
+      "level": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 30,
+    "fields": {
+      "code": "5",
+      "name": "GASTOS",
+      "description": "Gastos de la actividad ordinaria",
+      "account_type": "EXPENSE",
+      "parent": null,
+      "level": 1,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 31,
+    "fields": {
+      "code": "5.1",
+      "name": "COSTO DE VENTAS",
+      "description": "Costo de las mercaderías vendidas",
+      "account_type": "EXPENSE",
+      "parent": 30,
+      "level": 2,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 32,
+    "fields": {
+      "code": "5.1.1",
+      "name": "COSTO DE MERCADERIAS VENDIDAS",
+      "description": "Costo de productos vendidos",
+      "account_type": "EXPENSE",
+      "parent": 31,
+      "level": 3,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 33,
+    "fields": {
+      "code": "5.2",
+      "name": "GASTOS OPERACIONALES",
+      "description": "Gastos de administración y ventas",
+      "account_type": "EXPENSE",
+      "parent": 30,
+      "level": 2,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 34,
+    "fields": {
+      "code": "5.2.1",
+      "name": "GASTOS DE ADMINISTRACION",
+      "description": "Gastos administrativos generales",
+      "account_type": "EXPENSE",
+      "parent": 33,
+      "level": 3,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 35,
+    "fields": {
+      "code": "5.2.1.01",
+      "name": "SUELDOS Y SALARIOS",
+      "description": "Remuneraciones al personal administrativo",
+      "account_type": "EXPENSE",
+      "parent": 34,
+      "level": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 36,
+    "fields": {
+      "code": "5.2.1.02",
+      "name": "SERVICIOS BASICOS",
+      "description": "Agua, luz, teléfono, internet",
+      "account_type": "EXPENSE",
+      "parent": 34,
+      "level": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  }
+]

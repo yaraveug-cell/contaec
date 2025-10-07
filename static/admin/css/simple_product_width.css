@@ -1,0 +1,36 @@
+/* =====================================================================
+   SOLUCIÓN SIMPLE - CAMPO PRODUCTO MÁS GRANDE
+   Solo reglas esenciales sin conflictos
+   ===================================================================== */
+
+/* TABLA: Asegurar layout fijo */
+#invoiceline_set-group table {
+    table-layout: fixed !important;
+    width: 100% !important;
+}
+
+/* COLUMNAS: Solo las esenciales */
+#invoiceline_set-group table td:nth-child(2),
+#invoiceline_set-group table th:nth-child(2) {
+    width: 60% !important;  /* Campo producto dominante */
+}
+
+/* SELECT: Usar todo el espacio disponible */
+select[name*="product"] {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* SELECT2: Autocompletado */
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-selection--single {
+    width: 100% !important;
+}
+
+/* DEBUG: Borde rojo para verificar */
+select[name*="product"] {
+    border: 3px solid red !important;
+}

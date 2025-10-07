@@ -1,0 +1,274 @@
+/* 
+CSS Mejorado para el botón de impresión con mayor compatibilidad
+Asegura que el botón sea visible independientemente de la estructura del DOM
+*/
+
+/* Contenedor oculto */
+#print-button-container {
+    display: none; /* Oculto inicialmente, botón será clonado por JavaScript */
+}
+
+.btn-print {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    
+    /* Estilos base del botón - más consistente con Django Admin */
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white !important;
+    border: none;
+    border-radius: 4px; /* Más consistente con Django */
+    padding: 6px 12px; /* Altura similar a botones Django */
+    margin-right: 10px; /* Espaciado entre botones */
+    
+    /* Tipografía - más consistente con Django Admin */
+    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-size: 12px; /* Tamaño similar a botones Django */
+    font-weight: 400; /* Peso normal como botones Django */
+    text-decoration: none !important;
+    line-height: 1.2;
+    
+    /* Interactividad */
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Sombra sutil */
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.2);
+    
+    /* Prevenir selección de texto */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+.btn-print .icon {
+    font-size: 14px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}
+
+.btn-print .text {
+    font-size: 13px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+/* Estados del botón */
+.btn-print:hover {
+    background: linear-gradient(135deg, #218838 0%, #1e9a8a 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+    color: white !important;
+}
+
+.btn-print:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.4);
+}
+
+.btn-print:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.25);
+}
+
+/* Estado de carga */
+.btn-print.loading {
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    cursor: wait;
+    opacity: 0.8;
+}
+
+.btn-print.loading .icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Efecto hover mejorado */
+.btn-print.hover-effect {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 2px 4px rgba(40, 167, 69, 0.2); }
+    50% { box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4); }
+    100% { box-shadow: 0 2px 4px rgba(40, 167, 69, 0.2); }
+}
+
+/* Responsive optimizado para integración en submit-row */
+@media (max-width: 768px) {
+    .btn-print .text {
+        display: none;
+    }
+    
+    .btn-print {
+        padding: 6px 10px;
+        min-width: 35px;
+        justify-content: center;
+        margin-right: 5px;
+    }
+    
+    .btn-print .icon {
+        font-size: 14px;
+    }
+    
+    /* En móvil, asegurar que los botones se mantengan en una fila */
+    .submit-row {
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+    }
+    
+    .submit-row .btn-print.repositioned {
+        flex-shrink: 0;
+    }
+}
+
+/* Integración perfecta con submit-row de Django Admin */
+.submit-row .btn-print.repositioned {
+    /* Asegurar que se alinee correctamente con otros botones */
+    height: 35px; /* Altura estándar de botones Django Admin */
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    margin-left: 0;
+    order: 2; /* Posicionar después de botones principales pero antes de delete */
+}
+
+/* Asegurar que el deletelink mantenga su posición */
+.submit-row .deletelink {
+    margin-left: auto !important;
+    order: 10;
+}
+
+/* Compatibilidad con tema dark (si existe) */
+@media (prefers-color-scheme: dark) {
+    .btn-print {
+        background: linear-gradient(135deg, #198754 0%, #17a2b8 100%);
+    }
+    
+    .btn-print:hover {
+        background: linear-gradient(135deg, #146c43 0%, #138496 100%);
+    }
+}
+
+/* Estados adicionales para mejor UX */
+.btn-print[disabled] {
+    background: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.btn-print[disabled]:hover {
+    transform: none;
+    background: #6c757d;
+    box-shadow: 0 2px 4px rgba(108, 117, 125, 0.2);
+}
+
+/* Animación de aparición suave cuando se reposiciona */
+.btn-print.repositioned {
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Tooltip personalizado removido para evitar conflictos */
+
+/* Prevenir cualquier tooltip nativo del navegador */
+.btn-print {
+    /* Deshabilitar tooltips nativos y pseudo-elementos */
+    pointer-events: auto;
+}
+
+.btn-print::before,
+.btn-print::after {
+    /* Prevenir pseudo-elementos de tooltip */
+    content: none !important;
+    display: none !important;
+}
+
+/* Remover atributo title dinámicamente si existe */
+.btn-print[title] {
+    /* Ocultar tooltip nativo completamente */
+    position: relative;
+}
+
+.btn-print[title]:hover::before,
+.btn-print[title]:hover::after {
+    display: none !important;
+    content: none !important;
+    visibility: hidden !important;
+}
+
+/* Estados de integración con botones Django Admin */
+.btn-print.repositioned {
+    /* Sombra más sutil para integración */
+    box-shadow: 0 1px 3px rgba(40, 167, 69, 0.3);
+}
+
+.btn-print.repositioned:hover {
+    /* Efecto hover más sutil */
+    transform: translateY(-0.5px);
+    box-shadow: 0 2px 6px rgba(40, 167, 69, 0.4);
+}
+
+/* Asegurar que el botón no interfiera con otros elementos */
+.btn-print * {
+    box-sizing: border-box;
+}
+
+/* Animación de aparición suave cuando se reposiciona */
+.btn-print.repositioned {
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Mejora de accesibilidad */
+.btn-print:focus-visible {
+    outline: 2px solid #28a745;
+    outline-offset: 2px;
+}
+
+/* ================================== */
+/* ESTILOS FINALES OPTIMIZADOS */
+/* ================================== */
+
+/* Asegurar visibilidad del botón sin estilos de debug */
+.btn-print.repositioned {
+    /* Propiedades críticas para la integración */
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 100 !important;
+    
+    /* Layout optimizado */
+    box-sizing: border-box !important;
+    vertical-align: middle !important;
+    
+    /* Remover el borde de debug */
+    border: none !important;
+}

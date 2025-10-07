@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API ContaEC - Documentación</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f8fafc;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .endpoint {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+            color: white;
+            margin-right: 0.5rem;
+        }
+        
+        .method.post { background: #10b981; }
+        .method.get { background: #3b82f6; }
+        .method.put { background: #f59e0b; }
+        .method.delete { background: #ef4444; }
+        
+        .url {
+            font-family: monospace;
+            background: #1f2937;
+            color: #10b981;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        pre {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        
+        .token-example {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .credentials {
+            background: #dbeafe;
+            border: 1px solid #3b82f6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔌 ContaEC API</h1>
+        <p>Documentación de endpoints y autenticación JWT</p>
+    </div>
+    
+    <div class="section">
+        <h2>🔐 Autenticación</h2>
+        <p>La API usa JWT (JSON Web Tokens) para autenticación. Todos los endpoints protegidos requieren el header:</p>
+        <pre>Authorization: Bearer &lt;access_token&gt;</pre>
+        
+        <div class="credentials">
+            <h4>📋 Credenciales de prueba:</h4>
+            <ul>
+                <li><strong>Admin:</strong> admin@contaec.com / admin123</li>
+                <li><strong>Contador:</strong> contador@comecuador.com / contador123</li>
+                <li><strong>Gerente:</strong> gerente@comecuador.com / gerente123</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>🚀 Endpoints de Autenticación</h2>
+        
+        <div class="endpoint">
+            <h3>Login y obtener tokens</h3>
+            <span class="method post">POST</span>
+            <span class="url">http://127.0.0.1:8000/api/v1/auth/login/</span>
+            
+            <h4>Cuerpo de la petición:</h4>
+            <pre>{
+  "email": "admin@contaec.com",
+  "password": "admin123"
+}</pre>
+            
+            <h4>Respuesta exitosa:</h4>
+            <pre>{
+  "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+  "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+  "user": {
+    "id": 1,
+    "email": "admin@contaec.com",
+    "username": "admin",
+    "first_name": "Admin",
+    "last_name": "ContaEC",
+    "full_name": "Admin ContaEC",
+    "is_active": true
+  }
+}</pre>
+        </div>
+        
+        <div class="endpoint">
+            <h3>Refresh Token</h3>
+            <span class="method post">POST</span>
+            <span class="url">http://127.0.0.1:8000/api/v1/auth/token/refresh/</span>
+            
+            <h4>Cuerpo de la petición:</h4>
+            <pre>{
+  "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+}</pre>
+        </div>
+        
+        <div class="endpoint">
+            <h3>Logout</h3>
+            <span class="method post">POST</span>
+            <span class="url">http://127.0.0.1:8000/api/v1/auth/logout/</span>
+            <p><strong>Requiere autenticación</strong></p>
+            
+            <h4>Cuerpo de la petición:</h4>
+            <pre>{
+  "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+}</pre>
+        </div>
+        
+        <div class="endpoint">
+            <h3>Perfil del usuario</h3>
+            <span class="method get">GET</span>
+            <span class="url">http://127.0.0.1:8000/api/v1/auth/profile/</span>
+            <p><strong>Requiere autenticación</strong></p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>📊 Otros Endpoints</h2>
+        
+        <div class="endpoint">
+            <h3>Empresas</h3>
+            <span class="method get">GET</span>
+            <span class="url">http://127.0.0.1:8000/api/v1/companies/</span>
+            <p><strong>Requiere autenticación</strong></p>
+        </div>
+        
+        <div class="endpoint">
+            <h3>Plan de Cuentas</h3>
+            <span class="method get">GET</span>
+            <span class="url">http://127.0.0.1:8000/api/v1/accounting/chart-of-accounts/</span>
+            <p><strong>Requiere autenticación</strong></p>
+        </div>
+        
+        <div class="endpoint">
+            <h3>Usuarios</h3>
+            <span class="method get">GET</span>
+            <span class="url">http://127.0.0.1:8000/api/v1/auth/users/</span>
+            <p><strong>Requiere autenticación</strong></p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>💡 Ejemplo de uso con curl</h2>
+        
+        <h3>1. Obtener token:</h3>
+        <pre>curl -X POST http://127.0.0.1:8000/api/v1/auth/login/ \
+  -H "Content-Type: application/json" \
+  -d '{"email": "admin@contaec.com", "password": "admin123"}'</pre>
+        
+        <h3>2. Usar token para acceder a datos:</h3>
+        <pre>curl -X GET http://127.0.0.1:8000/api/v1/auth/profile/ \
+  -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."</pre>
+    </div>
+    
+    <div class="token-example">
+        <h3>⚠️ Importante:</h3>
+        <p>Los tokens JWT tienen una duración limitada. Usa el refresh token para obtener nuevos access tokens cuando expiren.</p>
+    </div>
+    
+    <div style="text-align: center; margin-top: 2rem;">
+        <a href="http://127.0.0.1:8000/" style="color: #667eea; text-decoration: none;">← Volver al inicio</a> |
+        <a href="http://127.0.0.1:8000/login/" style="color: #667eea; text-decoration: none;">Iniciar Sesión Web</a> |
+        <a href="http://127.0.0.1:8000/admin/" style="color: #667eea; text-decoration: none;">Panel Admin</a>
+    </div>
+</body>
+</html>

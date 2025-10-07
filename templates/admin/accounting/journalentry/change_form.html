@@ -1,0 +1,95 @@
+{% extends "admin/change_form.html" %}
+
+{% load i18n admin_urls static admin_modify %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/journal_print_button.css' %}">
+{% endblock %}
+
+{% block submit_buttons_top %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    {{ block.super }}
+
+    {% if original %}
+    <!-- Botón de impresión que será insertado por JavaScript -->
+    <div id="print-button-container" style="display: none;">
+        <a href="{% url 'admin:accounting_journalentry_print_pdf' original.pk %}"
+           class="btn-print"
+           target="_blank">
+            <span class="icon">🖨️</span>
+            <span class="text">Imprimir PDF</span>
+        </a>
+    </div>
+
+    <script type="text/javascript">
+        // Sistema de botón de impresión para asientos contables
+        document.addEventListener('DOMContentLoaded', function() {
+            'use strict';
+
+            // Verificar que estamos en página de edición
+            if (window.location.href.indexOf('/change/') === -1) return;
+
+            // Buscar contenedor del botón
+            const printContainer = document.getElementById('print-button-container');
+            if (!printContainer) return;
+
+            // Buscar botón original
+            const originalButton = printContainer.querySelector('.btn-print');
+            if (!originalButton) return;
+
+            // Buscar filas de botones - solo la primera para evitar duplicados
+            const submitRows = document.querySelectorAll('.submit-row');
+            if (submitRows.length === 0) return;
+
+            // Insertar solo en la primera fila de botones
+            const firstSubmitRow = submitRows[0];
+            
+            // Verificar que no existe ya un botón en esta fila
+            if (firstSubmitRow.querySelector('.btn-print')) return;
+            
+            // Clonar el botón
+            const clonedButton = originalButton.cloneNode(true);
+            clonedButton.classList.add('repositioned');
+            clonedButton.id = 'print-button-main';
+            
+            // Eliminar cualquier atributo title para prevenir tooltips
+            clonedButton.removeAttribute('title');
+            clonedButton.removeAttribute('alt');
+            clonedButton.removeAttribute('data-tooltip');
+
+            // Insertar antes del deletelink o al final
+            const deleteLink = firstSubmitRow.querySelector('.deletelink');
+            if (deleteLink) {
+                firstSubmitRow.insertBefore(clonedButton, deleteLink);
+            } else {
+                firstSubmitRow.appendChild(clonedButton);
+            }
+
+            // Event handler para efecto de loading
+            clonedButton.addEventListener('click', function(e) {
+                const textElement = this.querySelector('.text');
+                if (textElement) {
+                    const originalText = textElement.textContent;
+                    textElement.textContent = 'Generando PDF...';
+                    this.classList.add('loading');
+
+                    setTimeout(function() {
+                        textElement.textContent = originalText;
+                        clonedButton.classList.remove('loading');
+                    }, 1500);
+                }
+            });
+
+            console.log('✅ Botón de impresión integrado exitosamente');
+        });
+    </script>
+    {% endif %}
+{% endblock %}
+
+{% block submit_buttons_bottom %}
+    {{ block.super }}
+{% endblock %}

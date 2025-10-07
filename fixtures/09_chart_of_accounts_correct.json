@@ -1,0 +1,545 @@
+[
+  {
+    "model": "accounting.accounttype",
+    "pk": 1,
+    "fields": {
+      "code": "ASSET",
+      "name": "Activo",
+      "description": "Cuentas de activos",
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.accounttype",
+    "pk": 2,
+    "fields": {
+      "code": "LIABILITY",
+      "name": "Pasivo",
+      "description": "Cuentas de pasivos",
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.accounttype",
+    "pk": 3,
+    "fields": {
+      "code": "EQUITY",
+      "name": "Patrimonio",
+      "description": "Cuentas patrimoniales",
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.accounttype",
+    "pk": 4,
+    "fields": {
+      "code": "INCOME",
+      "name": "Ingresos",
+      "description": "Cuentas de ingresos",
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.accounttype",
+    "pk": 5,
+    "fields": {
+      "code": "EXPENSE",
+      "name": "Gastos",
+      "description": "Cuentas de gastos",
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 1,
+    "fields": {
+      "company": 1,
+      "code": "1",
+      "name": "ACTIVO",
+      "account_type": 1,
+      "parent": null,
+      "level": 1,
+      "is_detail": false,
+      "accepts_movement": false,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 2,
+    "fields": {
+      "company": 1,
+      "code": "1.1",
+      "name": "ACTIVO CORRIENTE",
+      "account_type": 1,
+      "parent": 1,
+      "level": 2,
+      "is_detail": false,
+      "accepts_movement": false,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 3,
+    "fields": {
+      "company": 1,
+      "code": "1.1.01",
+      "name": "CAJA GENERAL",
+      "account_type": 1,
+      "parent": 2,
+      "level": 3,
+      "is_detail": true,
+      "accepts_movement": true,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 4,
+    "fields": {
+      "company": 1,
+      "code": "1.1.02",
+      "name": "CAJA CHICA",
+      "account_type": 1,
+      "parent": 2,
+      "level": 3,
+      "is_detail": true,
+      "accepts_movement": true,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 5,
+    "fields": {
+      "company": 1,
+      "code": "1.1.03",
+      "name": "BANCO PICHINCHA CTE 001",
+      "account_type": 1,
+      "parent": 2,
+      "level": 3,
+      "is_detail": true,
+      "accepts_movement": true,
+      "requires_auxiliary": true,
+      "aux_type": "bank",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 6,
+    "fields": {
+      "company": 1,
+      "code": "1.1.04",
+      "name": "CLIENTES",
+      "account_type": 1,
+      "parent": 2,
+      "level": 3,
+      "is_detail": true,
+      "accepts_movement": true,
+      "requires_auxiliary": true,
+      "aux_type": "client",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 7,
+    "fields": {
+      "company": 1,
+      "code": "1.1.05",
+      "name": "INVENTARIO DE MERCADERIAS",
+      "account_type": 1,
+      "parent": 2,
+      "level": 3,
+      "is_detail": true,
+      "accepts_movement": true,
+      "requires_auxiliary": true,
+      "aux_type": "product",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 8,
+    "fields": {
+      "company": 1,
+      "code": "1.2",
+      "name": "ACTIVO NO CORRIENTE",
+      "account_type": 1,
+      "parent": 1,
+      "level": 2,
+      "is_detail": false,
+      "accepts_movement": false,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 9,
+    "fields": {
+      "company": 1,
+      "code": "1.2.01",
+      "name": "MAQUINARIA Y EQUIPO",
+      "account_type": 1,
+      "parent": 8,
+      "level": 3,
+      "is_detail": true,
+      "accepts_movement": true,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 10,
+    "fields": {
+      "company": 1,
+      "code": "2",
+      "name": "PASIVO",
+      "account_type": 2,
+      "parent": null,
+      "level": 1,
+      "is_detail": false,
+      "accepts_movement": false,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 11,
+    "fields": {
+      "company": 1,
+      "code": "2.1",
+      "name": "PASIVO CORRIENTE",
+      "account_type": 2,
+      "parent": 10,
+      "level": 2,
+      "is_detail": false,
+      "accepts_movement": false,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 12,
+    "fields": {
+      "company": 1,
+      "code": "2.1.01",
+      "name": "PROVEEDORES",
+      "account_type": 2,
+      "parent": 11,
+      "level": 3,
+      "is_detail": true,
+      "accepts_movement": true,
+      "requires_auxiliary": true,
+      "aux_type": "supplier",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 13,
+    "fields": {
+      "company": 1,
+      "code": "2.1.02",
+      "name": "IVA POR PAGAR",
+      "account_type": 2,
+      "parent": 11,
+      "level": 3,
+      "is_detail": true,
+      "accepts_movement": true,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "20801",
+      "tax_related": true,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 14,
+    "fields": {
+      "company": 1,
+      "code": "2.1.03",
+      "name": "IMPUESTO A LA RENTA POR PAGAR",
+      "account_type": 2,
+      "parent": 11,
+      "level": 3,
+      "is_detail": true,
+      "accepts_movement": true,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "20803",
+      "tax_related": true,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 15,
+    "fields": {
+      "company": 1,
+      "code": "3",
+      "name": "PATRIMONIO",
+      "account_type": 3,
+      "parent": null,
+      "level": 1,
+      "is_detail": false,
+      "accepts_movement": false,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 16,
+    "fields": {
+      "company": 1,
+      "code": "3.1",
+      "name": "CAPITAL SUSCRITO Y PAGADO",
+      "account_type": 3,
+      "parent": 15,
+      "level": 2,
+      "is_detail": true,
+      "accepts_movement": true,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 17,
+    "fields": {
+      "company": 1,
+      "code": "4",
+      "name": "INGRESOS",
+      "account_type": 4,
+      "parent": null,
+      "level": 1,
+      "is_detail": false,
+      "accepts_movement": false,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 18,
+    "fields": {
+      "company": 1,
+      "code": "4.1",
+      "name": "VENTAS GRAVADAS CON IVA 15%",
+      "account_type": 4,
+      "parent": 17,
+      "level": 2,
+      "is_detail": true,
+      "accepts_movement": true,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "60101",
+      "tax_related": true,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 19,
+    "fields": {
+      "company": 1,
+      "code": "5",
+      "name": "GASTOS",
+      "account_type": 5,
+      "parent": null,
+      "level": 1,
+      "is_detail": false,
+      "accepts_movement": false,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 20,
+    "fields": {
+      "company": 1,
+      "code": "5.1",
+      "name": "COSTO DE MERCADERIAS VENDIDAS",
+      "account_type": 5,
+      "parent": 19,
+      "level": 2,
+      "is_detail": true,
+      "accepts_movement": true,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 21,
+    "fields": {
+      "company": 1,
+      "code": "5.2",
+      "name": "GASTOS ADMINISTRATIVOS",
+      "account_type": 5,
+      "parent": 19,
+      "level": 2,
+      "is_detail": false,
+      "accepts_movement": false,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 22,
+    "fields": {
+      "company": 1,
+      "code": "5.2.01",
+      "name": "SUELDOS Y SALARIOS",
+      "account_type": 5,
+      "parent": 21,
+      "level": 3,
+      "is_detail": true,
+      "accepts_movement": true,
+      "requires_auxiliary": true,
+      "aux_type": "employee",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.chartofaccounts",
+    "pk": 23,
+    "fields": {
+      "company": 1,
+      "code": "5.2.02",
+      "name": "SERVICIOS BASICOS",
+      "account_type": 5,
+      "parent": 21,
+      "level": 3,
+      "is_detail": true,
+      "accepts_movement": true,
+      "requires_auxiliary": false,
+      "aux_type": "",
+      "sri_code": "",
+      "tax_related": false,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  }
+]

@@ -1,0 +1,163 @@
+/* ====================================================================
+   SOLUCIÓN RADICAL - FORZAR ANCHOS CON TODAS LAS COMBINACIONES POSIBLES
+   ==================================================================== */
+
+/* RESETEAR COMPLETAMENTE - Usar !important en TODO */
+
+/* 1. TARGETING TABULAR INLINE STRUCTURE */
+.tabular tr td:nth-child(1) { width: 35% !important; } /* Producto */
+.tabular tr td:nth-child(2) { width: 10% !important; } /* Cantidad */
+.tabular tr td:nth-child(3) { width: 12% !important; } /* Precio */
+.tabular tr td:nth-child(4) { width: 8% !important; }  /* Descuento */
+.tabular tr td:nth-child(5) { width: 8% !important; }  /* IVA */
+.tabular tr td:nth-child(6) { width: 15% !important; } /* Total */
+.tabular tr td:nth-child(7) { display: none !important; } /* Descripción */
+
+/* 2. TARGETING BY CLASS NAME */
+*[class*="field-product"] { width: 35% !important; min-width: 35% !important; max-width: 35% !important; }
+*[class*="field-quantity"] { width: 10% !important; min-width: 10% !important; max-width: 10% !important; }
+*[class*="field-unit_price"] { width: 12% !important; min-width: 12% !important; max-width: 12% !important; }
+*[class*="field-discount"] { width: 8% !important; min-width: 8% !important; max-width: 8% !important; }
+*[class*="field-iva_rate"] { width: 8% !important; min-width: 8% !important; max-width: 8% !important; }
+*[class*="field-line_total"] { width: 15% !important; min-width: 15% !important; max-width: 15% !important; }
+*[class*="field-description"] { display: none !important; }
+
+/* 3. TARGETING BY COLUMN HEADERS */
+*[class*="column-product"] { width: 35% !important; }
+*[class*="column-quantity"] { width: 10% !important; }
+*[class*="column-unit_price"] { width: 12% !important; }
+*[class*="column-discount"] { width: 8% !important; }
+*[class*="column-iva_rate"] { width: 8% !important; }
+*[class*="column-line_total"] { width: 15% !important; }
+*[class*="column-description"] { display: none !important; }
+
+/* 4. TARGETING BY NAME ATTRIBUTE */
+*[name*="product"] { width: 100% !important; min-width: 100% !important; }
+*[name*="quantity"] { width: 100% !important; }
+*[name*="unit_price"] { width: 100% !important; }
+*[name*="discount"] { width: 100% !important; }
+*[name*="iva_rate"] { width: 100% !important; }
+*[name*="line_total"] { width: 100% !important; }
+*[name*="description"] { display: none !important; position: absolute; left: -9999px; }
+
+/* 5. TARGETING DJANGO SPECIFIC STRUCTURES */
+.inline-group .tabular tr > * { box-sizing: border-box !important; }
+.inline-group .tabular tbody tr > *:nth-child(1) { width: 35% !important; }
+.inline-group .tabular tbody tr > *:nth-child(2) { width: 10% !important; }
+.inline-group .tabular tbody tr > *:nth-child(3) { width: 12% !important; }
+.inline-group .tabular tbody tr > *:nth-child(4) { width: 8% !important; }
+.inline-group .tabular tbody tr > *:nth-child(5) { width: 8% !important; }
+.inline-group .tabular tbody tr > *:nth-child(6) { width: 15% !important; }
+.inline-group .tabular tbody tr > *:nth-child(7) { display: none !important; }
+
+/* 6. HEADERS MATCHING */
+.inline-group .tabular thead tr > *:nth-child(1) { width: 35% !important; }
+.inline-group .tabular thead tr > *:nth-child(2) { width: 10% !important; }
+.inline-group .tabular thead tr > *:nth-child(3) { width: 12% !important; }
+.inline-group .tabular thead tr > *:nth-child(4) { width: 8% !important; }
+.inline-group .tabular thead tr > *:nth-child(5) { width: 8% !important; }
+.inline-group .tabular thead tr > *:nth-child(6) { width: 15% !important; }
+.inline-group .tabular thead tr > *:nth-child(7) { display: none !important; }
+
+/* 7. TABLE STRUCTURE FORCED */
+table[id*="invoiceline"] tr > *:nth-child(1) { width: 35% !important; }
+table[id*="invoiceline"] tr > *:nth-child(2) { width: 10% !important; }
+table[id*="invoiceline"] tr > *:nth-child(3) { width: 12% !important; }
+table[id*="invoiceline"] tr > *:nth-child(4) { width: 8% !important; }
+table[id*="invoiceline"] tr > *:nth-child(5) { width: 8% !important; }
+table[id*="invoiceline"] tr > *:nth-child(6) { width: 15% !important; }
+table[id*="invoiceline"] tr > *:nth-child(7) { display: none !important; }
+
+/* 8. FLEX FALLBACK */
+.inline-group .tabular { display: table !important; width: 100% !important; }
+.inline-group .tabular tbody { display: table-row-group !important; }
+.inline-group .tabular thead { display: table-header-group !important; }
+.inline-group .tabular tr { display: table-row !important; }
+.inline-group .tabular td { display: table-cell !important; }
+.inline-group .tabular th { display: table-cell !important; }
+
+/* 9. NUCLEAR OPTION - MAXIMUM SPECIFICITY */
+body * { box-sizing: border-box; }
+body .inline-group * { position: relative; }
+body .inline-group .tabular * { vertical-align: top; }
+body .inline-group .tabular tr * { padding: 4px; }
+
+/* SPECIFIC DJANGO ADMIN TARGETING */
+body .inline-group .tabular tr > td:nth-child(1),
+body .inline-group .tabular tr > th:nth-child(1) {
+    width: 35% !important;
+    min-width: 35% !important;
+    max-width: 35% !important;
+    flex: 0 0 35% !important;
+    background: rgba(255, 255, 0, 0.1) !important; /* Debug background */
+}
+
+body .inline-group .tabular tr > td:nth-child(2),
+body .inline-group .tabular tr > th:nth-child(2) {
+    width: 10% !important;
+    min-width: 10% !important;
+    max-width: 10% !important;
+    flex: 0 0 10% !important;
+    background: rgba(0, 255, 255, 0.1) !important; /* Debug background */
+}
+
+body .inline-group .tabular tr > td:nth-child(3),
+body .inline-group .tabular tr > th:nth-child(3) {
+    width: 12% !important;
+    min-width: 12% !important;
+    max-width: 12% !important;
+    flex: 0 0 12% !important;
+    background: rgba(0, 255, 0, 0.1) !important; /* Debug background */
+}
+
+body .inline-group .tabular tr > td:nth-child(4),
+body .inline-group .tabular tr > th:nth-child(4) {
+    width: 8% !important;
+    min-width: 8% !important;
+    max-width: 8% !important;
+    flex: 0 0 8% !important;
+    background: rgba(255, 0, 255, 0.1) !important; /* Debug background */
+}
+
+body .inline-group .tabular tr > td:nth-child(5),
+body .inline-group .tabular tr > th:nth-child(5) {
+    width: 8% !important;
+    min-width: 8% !important;
+    max-width: 8% !important;
+    flex: 0 0 8% !important;
+    background: rgba(255, 165, 0, 0.1) !important; /* Debug background */
+}
+
+body .inline-group .tabular tr > td:nth-child(6),
+body .inline-group .tabular tr > th:nth-child(6) {
+    width: 15% !important;
+    min-width: 15% !important;
+    max-width: 15% !important;
+    flex: 0 0 15% !important;
+    background: rgba(128, 128, 128, 0.1) !important; /* Debug background */
+}
+
+/* HIDE DESCRIPTION COLUMN COMPLETELY */
+body .inline-group .tabular tr > td:nth-child(7),
+body .inline-group .tabular tr > th:nth-child(7),
+body .inline-group .tabular tr > *:nth-child(7) {
+    display: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    left: -99999px !important;
+}
+
+/* VISUAL DEBUG - BORDERS TO IDENTIFY COLUMNS */
+.inline-group .tabular tr > *:nth-child(1) { border-left: 3px solid red !important; }
+.inline-group .tabular tr > *:nth-child(2) { border-left: 3px solid blue !important; }
+.inline-group .tabular tr > *:nth-child(3) { border-left: 3px solid green !important; }
+.inline-group .tabular tr > *:nth-child(4) { border-left: 3px solid orange !important; }
+.inline-group .tabular tr > *:nth-child(5) { border-left: 3px solid purple !important; }
+.inline-group .tabular tr > *:nth-child(6) { border-left: 3px solid brown !important; }

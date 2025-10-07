@@ -1,0 +1,67 @@
+[
+  {
+    "model": "inventory.productcategory",
+    "pk": 1,
+    "fields": {
+      "code": "MERC",
+      "name": "MERCADERIAS",
+      "description": "Productos adquiridos para la reventa",
+      "parent": null,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "inventory.productcategory",
+    "pk": 2,
+    "fields": {
+      "code": "ALIM",
+      "name": "ALIMENTOS Y BEBIDAS",
+      "description": "Productos alimenticios",
+      "parent": 1,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "inventory.productcategory",
+    "pk": 3,
+    "fields": {
+      "code": "ELEC",
+      "name": "ELECTRONICOS",
+      "description": "Productos electrónicos y tecnológicos",
+      "parent": 1,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "inventory.productcategory",
+    "pk": 4,
+    "fields": {
+      "code": "SERV",
+      "name": "SERVICIOS",
+      "description": "Servicios prestados",
+      "parent": null,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  },
+  {
+    "model": "inventory.productcategory",
+    "pk": 5,
+    "fields": {
+      "code": "CONS",
+      "name": "CONSULTORIA",
+      "description": "Servicios de consultoría profesional",
+      "parent": 4,
+      "is_active": true,
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z"
+    }
+  }
+]

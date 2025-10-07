@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprobantes de Retención - Múltiples</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 11px;
+            line-height: 1.3;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .page-break {
+            page-break-before: always;
+        }
+        
+        /* Reutilizar estilos del template individual pero más compactos */
+        .header {
+            text-align: center;
+            border: 2px solid #000;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: #f8f9fa;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .header .voucher-number {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 3px 0;
+            color: #007bff;
+        }
+        
+        .company-section {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+        
+        .company-section h3 {
+            margin: 0 0 8px 0;
+            font-size: 12px;
+            font-weight: bold;
+            color: #495057;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 3px;
+        }
+        
+        .company-info {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .company-info .left,
+        .company-info .right {
+            width: 48%;
+        }
+        
+        .info-row {
+            margin-bottom: 5px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            display: inline-block;
+            width: 100px;
+            font-size: 10px;
+        }
+        
+        .retention-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid #000;
+            margin-bottom: 15px;
+            font-size: 10px;
+        }
+        
+        .retention-table th,
+        .retention-table td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: left;
+            vertical-align: top;
+        }
+        
+        .retention-table th {
+            background-color: #e9ecef;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .retention-table .number-cell {
+            text-align: right;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .totals-section {
+            margin-top: 15px;
+            border: 2px solid #000;
+            padding: 8px;
+            background-color: #f8f9fa;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3px;
+            font-size: 11px;
+        }
+        
+        .total-row.main-total {
+            font-size: 13px;
+            font-weight: bold;
+            border-top: 2px solid #000;
+            padding-top: 5px;
+            margin-top: 5px;
+        }
+        
+        .signatures {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .signature-box {
+            width: 180px;
+            text-align: center;
+        }
+        
+        .signature-line {
+            border-top: 1px solid #000;
+            margin-top: 40px;
+            padding-top: 3px;
+            font-size: 10px;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 9px;
+            color: #666;
+        }
+        
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .font-bold { font-weight: bold; }
+    </style>
+</head>
+<body>
+    {% for voucher in vouchers %}
+        <div class="container{% if not forloop.first %} page-break{% endif %}">
+            <!-- ENCABEZADO -->
+            <div class="header">
+                <h1>Comprobante de Retención en la Fuente</h1>
+                <div class="voucher-number">No. {{ voucher.voucher_data.voucher_number }}</div>
+                <div>Fecha: {{ voucher.voucher_data.voucher_date|date:"d/m/Y" }}</div>
+            </div>
+
+            <!-- INFORMACIÓN DE LA EMPRESA -->
+            <div class="company-section">
+                <h3>DATOS DE LA EMPRESA</h3>
+                <div class="company-info">
+                    <div class="left">
+                        <div class="info-row">
+                            <span class="info-label">Razón Social:</span>
+                            <span>{{ voucher.company.legal_name }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">RUC:</span>
+                            <span>{{ voucher.company.ruc }}</span>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="info-row">
+                            <span class="info-label">Teléfono:</span>
+                            <span>{{ voucher.company.phone|default:"N/A" }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Email:</span>
+                            <span>{{ voucher.company.email|default:"N/A" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INFORMACIÓN DEL PROVEEDOR -->
+            <div class="company-section">
+                <h3>DATOS DEL PROVEEDOR</h3>
+                <div class="company-info">
+                    <div class="left">
+                        <div class="info-row">
+                            <span class="info-label">ID:</span>
+                            <span>{{ voucher.supplier.identification }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Nombre:</span>
+                            <span>{{ voucher.supplier.trade_name }}</span>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="info-row">
+                            <span class="info-label">Factura:</span>
+                            <span>{{ voucher.invoice.supplier_invoice_number }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Fecha:</span>
+                            <span>{{ voucher.invoice.date|date:"d/m/Y" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DETALLE DE RETENCIONES -->
+            <table class="retention-table">
+                <thead>
+                    <tr>
+                        <th>CONCEPTO</th>
+                        <th>BASE IMPONIBLE</th>
+                        <th>%</th>
+                        <th>VALOR RETENIDO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for retention in voucher.retentions %}
+                        {% if retention %}
+                            <tr>
+                                <td>{{ retention.concept }}</td>
+                                <td class="number-cell">${{ retention.base_amount|floatformat:2 }}</td>
+                                <td class="text-center">{{ retention.percentage|floatformat:1 }}%</td>
+                                <td class="number-cell">${{ retention.retained_amount|floatformat:2 }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- TOTALES -->
+            <div class="totals-section">
+                <div class="total-row">
+                    <span>Total Factura:</span>
+                    <span>${{ voucher.invoice.total|floatformat:2 }}</span>
+                </div>
+                <div class="total-row">
+                    <span>Total Retenciones:</span>
+                    <span>${{ voucher.invoice.total_retentions|floatformat:2 }}</span>
+                </div>
+                <div class="total-row main-total">
+                    <span>VALOR A PAGAR:</span>
+                    <span>${{ voucher.invoice.net_payable|floatformat:2 }}</span>
+                </div>
+            </div>
+
+            <!-- FIRMAS -->
+            <div class="signatures">
+                <div class="signature-box">
+                    <div class="signature-line">
+                        <div>FIRMA AUTORIZADA</div>
+                    </div>
+                </div>
+                <div class="signature-box">
+                    <div class="signature-line">
+                        <div>RECIBÍ CONFORME</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</body>
+</html>

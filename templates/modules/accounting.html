@@ -1,0 +1,80 @@
+{% extends 'modules/base_module.html' %}
+
+{% block breadcrumb %}Contabilidad{% endblock %}
+
+{% block content %}
+<div class="module-header">
+    <div class="module-icon">📊</div>
+    <h1>Módulo de Contabilidad</h1>
+    <p>Gestiona el plan de cuentas, asientos contables y balance general</p>
+</div>
+
+<div class="stats">
+    <div class="stat-card">
+        <h3>Plan de Cuentas</h3>
+        <div class="stat-value">{{ total_accounts }}</div>
+        <p>cuentas registradas</p>
+    </div>
+    
+    <div class="stat-card">
+        <h3>Asientos Contables</h3>
+        <div class="stat-value">{{ total_entries }}</div>
+        <p>asientos registrados</p>
+    </div>
+    
+    <div class="stat-card">
+        <h3>Empresas Asignadas</h3>
+        <div class="stat-value">{{ user_companies.count }}</div>
+        <p>empresas disponibles</p>
+    </div>
+</div>
+
+<div class="companies-section">
+    <h3>Mis Empresas</h3>
+    {% for company_user in user_companies %}
+    <div class="company-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h4>{{ company_user.company.trade_name }}</h4>
+                <p style="color: #6b7280;">RUC: {{ company_user.company.ruc }}</p>
+            </div>
+            <span style="background: #667eea; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem;">
+                {{ company_user.get_role_display }}
+            </span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="actions">
+    <h3>Acciones Disponibles</h3>
+    <div class="action-grid">
+        <a href="/admin/accounting/chartofaccounts/" class="action-card">
+            <h4>📋 Plan de Cuentas</h4>
+            <p>Gestionar cuentas contables</p>
+        </a>
+        
+        <a href="/admin/accounting/journalentry/" class="action-card">
+            <h4>✏️ Asientos Contables</h4>
+            <p>Crear y consultar asientos</p>
+        </a>
+        
+        <a href="/admin/accounting/journalentryline/" class="action-card">
+            <h4>📑 Líneas de Asiento</h4>
+            <p>Ver detalles de asientos</p>
+        </a>
+        
+        <a href="/modulos/reportes/" class="action-card">
+            <h4>📈 Reportes</h4>
+            <p>Estados financieros</p>
+        </a>
+        
+        {% if user.is_staff %}
+        <a href="/admin/accounting/" class="action-card">
+            <h4>⚙️ Admin Completo</h4>
+            <p>Acceso administrativo completo</p>
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

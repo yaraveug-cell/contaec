@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Botón Impresión - Simulación Django Admin</title>
+    <style>
+        body {
+            font-family: "Roboto", Arial, sans-serif;
+            margin: 20px;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .submit-row {
+            display: flex;
+            gap: 10px;
+            padding: 12px;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        .submit-row input, .submit-row button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        
+        .submit-row input[type="submit"] {
+            background: #0d6efd;
+            color: white;
+        }
+        
+        .deletelink {
+            background: #dc3545 !important;
+            color: white !important;
+            text-decoration: none;
+            padding: 8px 16px !important;
+            border-radius: 4px;
+            margin-left: auto !important;
+        }
+        
+        .btn-print {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white !important;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            text-decoration: none !important;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-print:hover {
+            background: linear-gradient(135deg, #218838 0%, #1e9a8a 100%);
+            transform: translateY(-1px);
+        }
+        
+        .btn-print.loading {
+            background: #6c757d;
+            cursor: wait;
+        }
+        
+        .btn-print .icon {
+            font-size: 14px;
+        }
+        
+        #print-button-container {
+            display: none;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        .console-output {
+            background: #000;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 20px 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖨️ Test del Botón de Impresión - Asientos Contables</h1>
+        
+        <div class="info">
+            <strong>Simulación del Django Admin:</strong> Este test verifica que el JavaScript funcione correctamente 
+            para insertar el botón de impresión en las filas de botones del admin.
+        </div>
+        
+        <h2>📄 Formulario de Asiento Contable (Simulado)</h2>
+        
+        <!-- Información básica del asiento -->
+        <div style="margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 4px;">
+            <h3>Información Básica</h3>
+            <p><strong>Número:</strong> #FC-FC-001-000009</p>
+            <p><strong>Empresa:</strong> CEMENTO MAXI</p>
+            <p><strong>Fecha:</strong> 02/10/2025</p>
+            <p><strong>Referencia:</strong> TEST-PRINT-001</p>
+        </div>
+        
+        <!-- Líneas del asiento -->
+        <div style="margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 4px;">
+            <h3>Líneas del Asiento</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr style="background: #f8f9fa;">
+                    <th style="padding: 8px; border: 1px solid #ddd;">Cuenta</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Descripción</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Débito</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Crédito</th>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">1105 - Caja</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Pago de cliente</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">$1,500.00</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">-</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">4101 - Ventas</td>
+                    <td style="padding: 8px; border: 1x solid #ddd;">Venta de producto</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">-</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: right;">$1,500.00</td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- Fila superior de botones -->
+        <h3>🔝 Botones Superiores</h3>
+        <div class="submit-row">
+            <input type="submit" value="Guardar" name="_save">
+            <input type="submit" value="Guardar y continuar editando" name="_continue">
+            <a href="#" class="deletelink">Eliminar</a>
+        </div>
+        
+        <!-- Fila inferior de botones -->
+        <h3>🔽 Botones Inferiores</h3>
+        <div class="submit-row">
+            <input type="submit" value="Guardar" name="_save">
+            <input type="submit" value="Guardar y continuar editando" name="_continue">
+            <a href="#" class="deletelink">Eliminar</a>
+        </div>
+        
+        <!-- Contenedor oculto del botón (como en el template real) -->
+        <div id="print-button-container" style="display: none;">
+            <a href="/admin/accounting/journalentry/21/print-pdf/" 
+               class="btn-print" 
+               target="_blank"
+               title="Imprimir asiento contable en PDF">
+                <span class="icon">🖨️</span>
+                <span class="text">Imprimir PDF</span>
+            </a>
+        </div>
+        
+        <div class="success" id="status" style="display: none;">
+            <strong>✅ Test completado:</strong> El botón de impresión ha sido integrado exitosamente.
+        </div>
+        
+        <!-- Consola de debug -->
+        <h3>💻 Consola de Debug</h3>
+        <div class="console-output" id="console-output">
+            Esperando inicialización del JavaScript...
+        </div>
+        
+        <div class="info">
+            <strong>Instrucciones:</strong>
+            <ol>
+                <li>Al cargar la página, el JavaScript debería ejecutarse automáticamente</li>
+                <li>Los mensajes aparecerán en la consola de debug arriba</li>
+                <li>El botón "🖨️ Imprimir PDF" debería aparecer en ambas filas de botones</li>
+                <li>El botón debería funcionar (abrir nueva pestaña con la URL del PDF)</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        // Sistema de consola personalizada para el test
+        const consoleOutput = document.getElementById('console-output');
+        const status = document.getElementById('status');
+        
+        function logToConsole(message) {
+            console.log(message);
+            const time = new Date().toLocaleTimeString();
+            consoleOutput.innerHTML += `[${time}] ${message}\n`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+        
+        // JavaScript para insertar botón de impresión en submit-rows
+        document.addEventListener('DOMContentLoaded', function() {
+            'use strict';
+            
+            logToConsole('🔍 Iniciando integración de botón de impresión...');
+            
+            // Buscar el contenedor del botón
+            const printContainer = document.getElementById('print-button-container');
+            
+            if (printContainer) {
+                logToConsole('✅ Contenedor de botón encontrado');
+                
+                // Buscar todas las filas submit-row
+                const submitRows = document.querySelectorAll('.submit-row');
+                
+                logToConsole('🔍 Submit-rows encontrados: ' + submitRows.length);
+                
+                let buttonsAdded = 0;
+                
+                submitRows.forEach(function(submitRow, index) {
+                    // Clonar el botón del contenedor oculto
+                    const originalButton = printContainer.querySelector('.btn-print');
+                    if (originalButton) {
+                        const clonedButton = originalButton.cloneNode(true);
+                        clonedButton.classList.add('repositioned');
+                        
+                        // Buscar el deletelink para insertarlo antes
+                        const deleteLink = submitRow.querySelector('.deletelink');
+                        
+                        if (deleteLink) {
+                            submitRow.insertBefore(clonedButton, deleteLink);
+                            logToConsole('✅ Botón insertado antes del deletelink en submit-row ' + index);
+                        } else {
+                            // Si no hay deletelink, insertar al final
+                            submitRow.appendChild(clonedButton);
+                            logToConsole('✅ Botón insertado al final de submit-row ' + index);
+                        }
+                        
+                        buttonsAdded++;
+                        
+                        // Agregar event handlers al botón clonado
+                        clonedButton.addEventListener('click', function(e) {
+                            e.preventDefault(); // Para el test, evitar navegación
+                            
+                            const textElement = this.querySelector('.text');
+                            if (textElement) {
+                                const originalText = textElement.textContent;
+                                textElement.textContent = 'Generando PDF...';
+                                this.classList.add('loading');
+                                
+                                logToConsole('📄 Generando PDF del asiento contable...');
+                                
+                                setTimeout(function() {
+                                    textElement.textContent = originalText;
+                                    clonedButton.classList.remove('loading');
+                                    logToConsole('✅ PDF generado exitosamente (simulación)');
+                                }, 2000);
+                            }
+                        });
+                        
+                        // Efecto hover
+                        clonedButton.addEventListener('mouseenter', function() {
+                            this.classList.add('hover-effect');
+                            logToConsole('👆 Hover sobre botón de impresión');
+                        });
+                        
+                        clonedButton.addEventListener('mouseleave', function() {
+                            this.classList.remove('hover-effect');
+                        });
+                    }
+                });
+                
+                if (buttonsAdded > 0) {
+                    logToConsole('✅ Botón de impresión integrado en ' + buttonsAdded + ' filas de botones');
+                    status.style.display = 'block';
+                } else {
+                    logToConsole('❌ No se pudieron agregar botones');
+                }
+            } else {
+                logToConsole('❌ No se encontró el contenedor del botón de impresión');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+[
+  {
+    "model": "core.province",
+    "pk": 1,
+    "fields": {
+      "country": 1,
+      "code": "01",
+      "name": "Azuay",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 2,
+    "fields": {
+      "country": 1,
+      "code": "02",
+      "name": "Bolívar",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 3,
+    "fields": {
+      "country": 1,
+      "code": "03",
+      "name": "Cañar",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 4,
+    "fields": {
+      "country": 1,
+      "code": "04",
+      "name": "Carchi",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 5,
+    "fields": {
+      "country": 1,
+      "code": "05",
+      "name": "Cotopaxi",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 6,
+    "fields": {
+      "country": 1,
+      "code": "06",
+      "name": "Chimborazo",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 7,
+    "fields": {
+      "country": 1,
+      "code": "07",
+      "name": "El Oro",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 8,
+    "fields": {
+      "country": 1,
+      "code": "08",
+      "name": "Esmeraldas",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 9,
+    "fields": {
+      "country": 1,
+      "code": "09",
+      "name": "Guayas",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 10,
+    "fields": {
+      "country": 1,
+      "code": "10",
+      "name": "Imbabura",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 11,
+    "fields": {
+      "country": 1,
+      "code": "11",
+      "name": "Loja",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 12,
+    "fields": {
+      "country": 1,
+      "code": "12",
+      "name": "Los Ríos",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 13,
+    "fields": {
+      "country": 1,
+      "code": "13",
+      "name": "Manabí",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 14,
+    "fields": {
+      "country": 1,
+      "code": "14",
+      "name": "Morona Santiago",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 15,
+    "fields": {
+      "country": 1,
+      "code": "15",
+      "name": "Napo",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 16,
+    "fields": {
+      "country": 1,
+      "code": "16",
+      "name": "Pastaza",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 17,
+    "fields": {
+      "country": 1,
+      "code": "17",
+      "name": "Pichincha",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 18,
+    "fields": {
+      "country": 1,
+      "code": "18",
+      "name": "Tungurahua",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 19,
+    "fields": {
+      "country": 1,
+      "code": "19",
+      "name": "Zamora Chinchipe",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 20,
+    "fields": {
+      "country": 1,
+      "code": "20",
+      "name": "Galápagos",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 21,
+    "fields": {
+      "country": 1,
+      "code": "21",
+      "name": "Sucumbíos",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 22,
+    "fields": {
+      "country": 1,
+      "code": "22",
+      "name": "Orellana",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 23,
+    "fields": {
+      "country": 1,
+      "code": "23",
+      "name": "Santo Domingo de los Tsáchilas",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "core.province",
+    "pk": 24,
+    "fields": {
+      "country": 1,
+      "code": "24",
+      "name": "Santa Elena",
+      "created_at": "2025-09-28T14:00:00Z",
+      "updated_at": "2025-09-28T14:00:00Z",
+      "is_active": true
+    }
+  }
+]

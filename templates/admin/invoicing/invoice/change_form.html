@@ -1,0 +1,185 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls static admin_modify %}
+
+{% block submit_buttons_bottom %}
+    {{ block.super }}
+    {% if original.pk %}
+        <a href="{% url 'admin:invoicing_invoice_print_pdf' original.pk %}" 
+           class="print-pdf-button" 
+           target="_blank"
+           title="Generar e imprimir PDF de esta factura">
+            🖨️ Imprimir PDF
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    
+    <script type="text/javascript">
+        // Inicialización inmediata de datos (sin delays)
+        (function() {
+            'use strict';
+            
+            // Datos de productos CON LOGS DETALLADOS
+            try {
+                var productsDataRaw = '{{ products_data_json|safe|escapejs }}';
+                console.log('🔍 RAW products data length:', productsDataRaw.length);
+                console.log('🔍 RAW products data preview:', productsDataRaw.substring(0, 200));
+                
+                window.productsData = (productsDataRaw && productsDataRaw !== 'None' && productsDataRaw !== '') 
+                    ? JSON.parse(productsDataRaw) : {};
+                
+                console.log('✅ Productos data parseados:', Object.keys(window.productsData).length + ' productos');
+                
+                // Log de algunos productos para debug
+                const productIds = Object.keys(window.productsData);
+                if (productIds.length > 0) {
+                    console.log('📦 Primer producto ejemplo:', window.productsData[productIds[0]]);
+                    
+                    // Verificar que tengan current_stock
+                    const firstProduct = window.productsData[productIds[0]];
+                    console.log('📊 Stock del primer producto:', firstProduct.current_stock);
+                }
+            } catch (error) {
+                window.productsData = {};
+                console.error('❌ Error parsing productos data:', error.message);
+                console.error('❌ Raw data que causó error:', productsDataRaw);
+            }
+            
+            // Datos de factura
+            try {
+                var transferDetail = '{{ original.transfer_detail|default_if_none:""|escapejs }}' || 
+                                   '{{ object.transfer_detail|default_if_none:""|escapejs }}' || '';
+                window.invoiceData = { transfer_detail: transferDetail };
+                console.log('✅ Invoice data inicializado');
+            } catch (error) {
+                window.invoiceData = { transfer_detail: '' };
+                console.warn('⚠️ Error invoice data:', error.message);
+            }
+        })();
+    </script>
+    
+    <!-- Sistema estable para evitar reajustes -->
+    <script type="text/javascript" src="{% static 'admin/js/stable_invoice_system.js' %}"></script>
+    
+    <!-- Autocompletado de líneas de factura -->
+    <script type="text/javascript" src="{% static 'admin/js/invoice_line_autocomplete.js' %}"></script>
+    
+    <!-- Actualizador automático de stock -->
+    <script type="text/javascript" src="{% static 'admin/js/stock_updater.js' %}"></script>
+    
+    <!-- Script de prueba para stock -->
+    <script type="text/javascript" src="{% static 'admin/js/stock_test.js' %}"></script>
+    
+    <!-- Script para mover el botón a la fila de botones -->
+    <script type="text/javascript">
+        (function() {
+            'use strict';
+            
+            function moveButtonToSubmitRow() {
+                // Buscar el botón de impresión
+                var printButton = document.querySelector('.print-pdf-button');
+                var submitRow = document.querySelector('.submit-row');
+                
+                if (printButton && submitRow) {
+                    // Mover el botón a la fila de botones
+                    submitRow.appendChild(printButton);
+                    console.log('✅ Botón de impresión movido a submit-row');
+                }
+            }
+            
+            // Ejecutar cuando el DOM esté listo
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', moveButtonToSubmitRow);
+            } else {
+                moveButtonToSubmitRow();
+            }
+            
+            // También ejecutar después de un breve delay por si acaso
+            setTimeout(moveButtonToSubmitRow, 100);
+        })();
+    </script>
+    
+    <!-- Estilos para el botón de impresión en la misma fila -->
+    <style>
+        .print-pdf-button {
+            /* Estilo similar a botones de Django Admin */
+            background: #e74c3c !important;
+            color: white !important;
+            padding: 10px 15px !important;
+            border-radius: 4px !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            margin-left: 10px !important;
+            font-weight: normal !important;
+            font-size: 13px !important;
+            line-height: 1 !important;
+            border: 1px solid #c0392b !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            vertical-align: middle !important;
+            box-sizing: border-box !important;
+            height: 35px !important;
+        }
+        
+        .print-pdf-button:hover {
+            background: #c0392b !important;
+            border-color: #a93226 !important;
+            color: white !important;
+            text-decoration: none !important;
+        }
+        
+        .print-pdf-button:active,
+        .print-pdf-button:focus {
+            background: #a93226 !important;
+            border-color: #922b21 !important;
+            color: white !important;
+            outline: none !important;
+        }
+        
+        /* Asegurar que se mantenga en la misma línea */
+        .submit-row {
+            display: flex !important;
+            align-items: center !important;
+            flex-wrap: wrap !important;
+            gap: 10px !important;
+        }
+        
+        .submit-row input[type="submit"],
+        .submit-row .print-pdf-button {
+            margin: 0 !important;
+            flex-shrink: 0 !important;
+        }
+        
+        .submit-row .deletelink-box {
+            margin: 0 !important;
+        }
+        
+        /* Responsive para dispositivos móviles */
+        @media (max-width: 768px) {
+            .submit-row {
+                flex-direction: column !important;
+                align-items: stretch !important;
+            }
+            
+            .print-pdf-button {
+                width: 100% !important;
+                text-align: center !important;
+                margin: 5px 0 0 0 !important;
+            }
+        }
+        
+        /* Dark mode compatibility */
+        @media (prefers-color-scheme: dark) {
+            .print-pdf-button {
+                background: #c0392b !important;
+                border-color: #a93226 !important;
+            }
+            
+            .print-pdf-button:hover {
+                background: #a93226 !important;
+            }
+        }
+    </style>
+{% endblock %}

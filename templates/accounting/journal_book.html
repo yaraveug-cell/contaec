@@ -1,0 +1,759 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reports.css' %}">
+<style>
+    .journal-book-container {
+        padding: 20px;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+    
+    .journal-book-header {
+        background: linear-gradient(135deg, #6f42c1 0%, #563d7c 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    
+    .controls-section {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 25px;
+    }
+    
+    .controls-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        align-items: end;
+    }
+    
+    .pagination-controls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        align-items: end;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #555;
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, #6f42c1 0%, #563d7c 100%);
+        border: none;
+        padding: 12px 25px;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        font-weight: 600;
+        transition: transform 0.2s ease;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .results-section {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-top: 25px;
+        overflow: hidden;
+    }
+    
+    .results-header {
+        background: #f8f9fa;
+        padding: 20px;
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .export-buttons {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .btn-success {
+        background: #28a745;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .summary-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .summary-card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .summary-card h4 {
+        margin: 0 0 10px 0;
+        font-size: 14px;
+        color: #6c757d;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+    
+    .summary-card .value {
+        font-size: 24px;
+        font-weight: 700;
+        font-family: 'Courier New', monospace;
+        margin: 0;
+        color: #6f42c1;
+    }
+    
+    .pagination-section {
+        padding: 20px;
+        background: #f8f9fa;
+        border-top: 1px solid #e9ecef;
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .pagination-info {
+        color: #6c757d;
+        font-size: 14px;
+    }
+    
+    .pagination-buttons {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .btn-secondary {
+        background: #6c757d;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+        text-decoration: none;
+    }
+    
+    .btn-secondary:disabled {
+        background: #e9ecef;
+        color: #6c757d;
+        cursor: not-allowed;
+    }
+    
+    .journal-entry {
+        margin-bottom: 30px;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .entry-header {
+        background: linear-gradient(135deg, #6f42c1 0%, #563d7c 100%);
+        color: white;
+        padding: 15px 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        align-items: center;
+    }
+    
+    .entry-info h4 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    
+    .entry-info p {
+        margin: 5px 0 0 0;
+        opacity: 0.9;
+        font-size: 14px;
+    }
+    
+    .entry-totals {
+        text-align: right;
+    }
+    
+    .entry-totals .total-amount {
+        font-size: 18px;
+        font-weight: 700;
+        font-family: 'Courier New', monospace;
+    }
+    
+    .entry-lines {
+        background: white;
+    }
+    
+    .entry-lines table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .entry-lines th {
+        background: #f8f9fa;
+        padding: 12px 8px;
+        text-align: left;
+        font-weight: 600;
+        border-bottom: 2px solid #e9ecef;
+        font-size: 12px;
+        color: #495057;
+    }
+    
+    .entry-lines td {
+        padding: 12px 8px;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 13px;
+    }
+    
+    .entry-lines tbody tr:hover {
+        background: #f8f9fa;
+    }
+    
+    .account-code {
+        text-align: center;
+        font-weight: 600;
+        color: #495057;
+        width: 80px;
+    }
+    
+    .account-name {
+        color: #495057;
+        font-weight: 500;
+    }
+    
+    .line-description {
+        color: #6c757d;
+        font-style: italic;
+    }
+    
+    .amount {
+        text-align: right;
+        font-family: 'Courier New', monospace;
+        font-weight: 600;
+        width: 100px;
+    }
+    
+    .amount.debit {
+        color: #dc3545;
+    }
+    
+    .amount.credit {
+        color: #28a745;
+    }
+    
+    .entry-balance-check {
+        background: #f8f9fa;
+        padding: 10px 20px;
+        text-align: center;
+        font-weight: 600;
+        border-top: 2px solid #e9ecef;
+    }
+    
+    .balanced {
+        color: #28a745;
+    }
+    
+    .unbalanced {
+        color: #dc3545;
+    }
+    
+    .loading {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+    }
+    
+    .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 20px 0;
+        border: 1px solid #f5c6cb;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+    }
+    
+    @media (max-width: 768px) {
+        .journal-book-container {
+            padding: 10px;
+        }
+        
+        .controls-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .results-header {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .entry-header {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+        
+        .entry-totals {
+            text-align: center;
+        }
+        
+        .pagination-section {
+            flex-direction: column;
+        }
+        
+        .summary-cards {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="journal-book-container">
+    <!-- Header -->
+    <div class="journal-book-header">
+        <h1 class="mb-0">Libro Diario</h1>
+        <p class="mb-0">Registro cronológico de todos los asientos contables</p>
+    </div>
+    
+    <!-- Controls -->
+    <div class="controls-section">
+        <form id="journalBookForm">
+            <div class="controls-grid">
+                <div class="form-group">
+                    <label for="company_id">Empresa *</label>
+                    <select id="company_id" name="company_id" class="form-control" required>
+                        <option value="">Seleccione una empresa</option>
+                        {% for company in companies %}
+                            <option value="{{ company.id }}">{{ company.trade_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="start_date">Fecha Inicial *</label>
+                    <input type="date" id="start_date" name="start_date" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="end_date">Fecha Final *</label>
+                    <input type="date" id="end_date" name="end_date" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-book"></i> Generar Libro
+                    </button>
+                </div>
+            </div>
+            
+            <div class="pagination-controls" style="margin-top: 20px; display: none;" id="paginationControls">
+                <div class="form-group">
+                    <label for="per_page">Asientos por página</label>
+                    <select id="per_page" name="per_page" class="form-control">
+                        <option value="25">25</option>
+                        <option value="50" selected>50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Loading -->
+    <div id="loading" class="loading" style="display: none;">
+        <i class="fas fa-spinner fa-spin fa-2x"></i>
+        <p>Generando Libro Diario...</p>
+    </div>
+    
+    <!-- Error -->
+    <div id="error" class="error-message" style="display: none;"></div>
+    
+    <!-- Results -->
+    <div id="results" class="results-section" style="display: none;">
+        <div class="results-header">
+            <div>
+                <h3 id="companyName" class="mb-1"></h3>
+                <p id="reportPeriod" class="mb-0 text-muted"></p>
+            </div>
+            <div class="export-buttons">
+                <a id="exportPdf" href="#" class="btn btn-success">
+                    <i class="fas fa-file-pdf"></i> Exportar PDF
+                </a>
+            </div>
+        </div>
+        
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+            <div class="summary-card">
+                <h4>Total Asientos</h4>
+                <p id="totalEntries" class="value">0</p>
+            </div>
+            <div class="summary-card">
+                <h4>Total Debe</h4>
+                <p id="totalDebit" class="value">$0.00</p>
+            </div>
+            <div class="summary-card">
+                <h4>Total Haber</h4>
+                <p id="totalCredit" class="value">$0.00</p>
+            </div>
+        </div>
+        
+        <!-- Pagination Info -->
+        <div class="pagination-section">
+            <div class="pagination-info">
+                <span id="paginationInfo"></span>
+            </div>
+            <div class="pagination-buttons">
+                <button id="prevPage" class="btn btn-secondary" onclick="changePage('prev')">
+                    <i class="fas fa-chevron-left"></i> Anterior
+                </button>
+                <span id="pageNumbers" class="mx-3"></span>
+                <button id="nextPage" class="btn btn-secondary" onclick="changePage('next')">
+                    Siguiente <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Journal Entries -->
+        <div id="journalEntries" style="padding: 20px;">
+            <!-- Entries will be loaded here -->
+        </div>
+        
+        <!-- Bottom Pagination -->
+        <div class="pagination-section">
+            <div class="pagination-info">
+                <span id="bottomPaginationInfo"></span>
+            </div>
+            <div class="pagination-buttons">
+                <button id="bottomPrevPage" class="btn btn-secondary" onclick="changePage('prev')">
+                    <i class="fas fa-chevron-left"></i> Anterior
+                </button>
+                <span id="bottomPageNumbers" class="mx-3"></span>
+                <button id="bottomNextPage" class="btn btn-secondary" onclick="changePage('next')">
+                    Siguiente <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Empty State -->
+    <div id="emptyState" class="empty-state" style="display: none;">
+        <i class="fas fa-book fa-3x text-muted mb-3"></i>
+        <h4>No hay datos para mostrar</h4>
+        <p>Seleccione una empresa y período para generar el libro diario</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('journalBookForm');
+    const loading = document.getElementById('loading');
+    const error = document.getElementById('error');
+    const results = document.getElementById('results');
+    const emptyState = document.getElementById('emptyState');
+    
+    let currentPage = 1;
+    let currentData = null;
+    
+    // Set default dates (current month)
+    const now = new Date();
+    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+    const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    
+    document.getElementById('start_date').value = firstDay.toISOString().split('T')[0];
+    document.getElementById('end_date').value = lastDay.toISOString().split('T')[0];
+    
+    // Show empty state initially
+    emptyState.style.display = 'block';
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        currentPage = 1;
+        generateJournalBook();
+    });
+    
+    // Per page change event
+    document.getElementById('per_page').addEventListener('change', function() {
+        if (currentData) {
+            currentPage = 1;
+            generateJournalBook();
+        }
+    });
+    
+    function generateJournalBook() {
+        const formData = new FormData(form);
+        const params = new URLSearchParams();
+        
+        for (let [key, value] of formData.entries()) {
+            if (value) params.append(key, value);
+        }
+        
+        if (!params.get('company_id') || !params.get('start_date') || !params.get('end_date')) {
+            showError('Debe completar todos los campos requeridos');
+            return;
+        }
+        
+        // Add pagination
+        params.append('page', currentPage);
+        params.append('per_page', document.getElementById('per_page').value);
+        
+        // Show loading
+        hideAllSections();
+        loading.style.display = 'block';
+        
+        // Make API request
+        fetch(`/accounting/journal-book-data/?${params.toString()}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al obtener datos');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                currentData = data;
+                displayJournalBook(data);
+            })
+            .catch(err => {
+                showError(err.message);
+            })
+            .finally(() => {
+                loading.style.display = 'none';
+            });
+    }
+    
+    function displayJournalBook(data) {
+        hideAllSections();
+        
+        // Update company info
+        document.getElementById('companyName').textContent = data.company.legal_name;
+        
+        // Update period
+        const periodText = `Del ${data.period.start_date_formatted} al ${data.period.end_date_formatted}`;
+        document.getElementById('reportPeriod').textContent = periodText;
+        
+        // Update export link
+        const exportParams = new URLSearchParams();
+        exportParams.append('company_id', data.company.id);
+        exportParams.append('start_date', data.period.start_date);
+        exportParams.append('end_date', data.period.end_date);
+        
+        document.getElementById('exportPdf').href = 
+            `/accounting/export-journal-book-pdf/?${exportParams.toString()}`;
+        
+        // Update summary cards
+        document.getElementById('totalEntries').textContent = data.period_totals.entries_count.toLocaleString();
+        document.getElementById('totalDebit').textContent = formatCurrency(data.period_totals.debit);
+        document.getElementById('totalCredit').textContent = formatCurrency(data.period_totals.credit);
+        
+        // Update pagination info
+        const paginationText = `Página ${data.pagination.current_page} de ${data.pagination.total_pages} (${data.pagination.total_entries} asientos)`;
+        document.getElementById('paginationInfo').textContent = paginationText;
+        document.getElementById('bottomPaginationInfo').textContent = paginationText;
+        
+        // Update page numbers
+        const pageNumbersHtml = `${data.pagination.current_page} / ${data.pagination.total_pages}`;
+        document.getElementById('pageNumbers').textContent = pageNumbersHtml;
+        document.getElementById('bottomPageNumbers').textContent = pageNumbersHtml;
+        
+        // Update pagination buttons
+        updatePaginationButtons(data.pagination);
+        
+        // Display journal entries
+        displayJournalEntries(data.entries);
+        
+        // Show pagination controls
+        document.getElementById('paginationControls').style.display = 'grid';
+        results.style.display = 'block';
+    }
+    
+    function displayJournalEntries(entries) {
+        const container = document.getElementById('journalEntries');
+        container.innerHTML = '';
+        
+        if (entries.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-book fa-3x text-muted mb-3"></i>
+                    <h4>No hay asientos en este período</h4>
+                    <p>No se encontraron asientos contables para el período seleccionado</p>
+                </div>
+            `;
+            return;
+        }
+        
+        entries.forEach(entry => {
+            const entryDiv = document.createElement('div');
+            entryDiv.className = 'journal-entry';
+            
+            // Entry header
+            const headerHtml = `
+                <div class="entry-header">
+                    <div class="entry-info">
+                        <h4>Asiento No. ${entry.number}</h4>
+                        <p>Fecha: ${entry.date_formatted}</p>
+                        ${entry.reference ? `<p>Ref: ${entry.reference}</p>` : ''}
+                    </div>
+                    <div class="entry-totals">
+                        <div class="total-amount">
+                            Debe: ${formatCurrency(entry.total_debit)}
+                        </div>
+                        <div class="total-amount">
+                            Haber: ${formatCurrency(entry.total_credit)}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Entry lines table
+            let linesHtml = `
+                <div class="entry-lines">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Cuenta</th>
+                                <th>Concepto</th>
+                                <th class="text-right">Debe</th>
+                                <th class="text-right">Haber</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            entry.lines.forEach(line => {
+                const debitAmount = line.debit > 0 ? formatCurrency(line.debit) : '-';
+                const creditAmount = line.credit > 0 ? formatCurrency(line.credit) : '-';
+                
+                linesHtml += `
+                    <tr>
+                        <td class="account-code">${line.account_code}</td>
+                        <td class="account-name">${line.account_name}</td>
+                        <td class="line-description">${line.description || entry.description || ''}</td>
+                        <td class="amount ${line.is_debit ? 'debit' : ''}">${debitAmount}</td>
+                        <td class="amount ${!line.is_debit ? 'credit' : ''}">${creditAmount}</td>
+                    </tr>
+                `;
+            });
+            
+            linesHtml += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            // Balance check
+            const balanceClass = entry.is_balanced ? 'balanced' : 'unbalanced';
+            const balanceText = entry.is_balanced ? '✓ Asiento Balanceado' : '✗ Asiento Desbalanceado';
+            const balanceHtml = `
+                <div class="entry-balance-check ${balanceClass}">
+                    ${balanceText}
+                    ${entry.description ? `<br><strong>Concepto:</strong> ${entry.description}` : ''}
+                </div>
+            `;
+            
+            entryDiv.innerHTML = headerHtml + linesHtml + balanceHtml;
+            container.appendChild(entryDiv);
+        });
+    }
+    
+    function updatePaginationButtons(pagination) {
+        // Update all pagination buttons
+        const prevButtons = [document.getElementById('prevPage'), document.getElementById('bottomPrevPage')];
+        const nextButtons = [document.getElementById('nextPage'), document.getElementById('bottomNextPage')];
+        
+        prevButtons.forEach(btn => {
+            btn.disabled = !pagination.has_previous;
+        });
+        
+        nextButtons.forEach(btn => {
+            btn.disabled = !pagination.has_next;
+        });
+    }
+    
+    window.changePage = function(direction) {
+        if (!currentData) return;
+        
+        if (direction === 'prev' && currentData.pagination.has_previous) {
+            currentPage = currentData.pagination.previous_page;
+            generateJournalBook();
+        } else if (direction === 'next' && currentData.pagination.has_next) {
+            currentPage = currentData.pagination.next_page;
+            generateJournalBook();
+        }
+    }
+    
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('es-EC', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2
+        }).format(amount);
+    }
+    
+    function showError(message) {
+        hideAllSections();
+        error.textContent = message;
+        error.style.display = 'block';
+    }
+    
+    function hideAllSections() {
+        loading.style.display = 'none';
+        error.style.display = 'none';
+        results.style.display = 'none';
+        emptyState.style.display = 'none';
+    }
+});
+</script>
+{% endblock %}
